@@ -1,0 +1,31 @@
+{
+  "name": "node-qpdf",
+  "version": "0.0.1",
+  "description": "A wrapper for qpdf which does structural, content-preserving transformations on PDF files",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nrhirani/node-qpdf.git"
+  },
+  "keywords": [
+    "pdf",
+    "password protect",
+    "encrypt",
+    "dcrypt",
+    "aes",
+    "rc4",
+    "aes-256",
+    "aes-128",
+    "rc4-128",
+    "rc4-40"
+  ],
+  "author": "Nishit Hirani <nrhirani@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nrhirani/node-qpdf/issues"
+  },
+  "homepage": "https://github.com/nrhirani/node-qpdf#readme"
+}
