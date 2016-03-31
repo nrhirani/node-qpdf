@@ -4,8 +4,8 @@ var stream = require('stream');
 var Qpdf = {};
 
 Qpdf.encrypt = function(input, options, callback) {
-  if (!input) handleError(new Error('Specify input file'));
-  if (!options || !options.password) handleError(new Error('Password missing'));
+  if (!input) return handleError(new Error('Specify input file'));
+  if (!options || !options.password) return handleError(new Error('Password missing'));
 
   // Defaults encryption to AES 256
   options.keyLength = options.keyLength || '256';
@@ -21,7 +21,7 @@ Qpdf.encrypt = function(input, options, callback) {
 
   // Add Resctrictions for encryption
   if (options.restrictions) {
-    if (typeof options.restrictions != 'object') return callback(new Error('Invalid Restrictions'));
+    if (typeof options.restrictions !== 'object') return handleError(new Error('Invalid Restrictions'));
 
     var restrictions = options.restrictions;
 
@@ -31,15 +31,45 @@ Qpdf.encrypt = function(input, options, callback) {
     }
   }
 
-  // Marks end of --encrtpy options
+  // Marks end of --encrypt options
   args.push('--');
 
-  // Input File
+  // Input file path
   args.push(input);
 
-  // Print PDf on stdin
+  // Print PDf on stdout
   args.push('-');
 
+  // Execute command and return stdout for pipe
+  var outputStream = executeCommand(args, callback);
+  if (outputStream) {
+    return outputStream;
+  }
+};
+
+Qpdf.decrypt = function(input, password, callback) {
+  if (!input) return handleError(new Error('Specify input file'), callback);
+  if (!password) return handleError(new Error('Password missing'), callback);
+
+  var args = ['qpdf', '--decrypt'];
+
+  // Password
+  args.push('--password=' + password);
+
+  // Input file path
+  args.push(input);
+
+  // Print PDf on stdout
+  args.push('-');
+
+  // Execute command and return stdout for pipe
+  var outputStream = executeCommand(args, callback);
+  if (outputStream) {
+    return outputStream;
+  }
+};
+
+function executeCommand(args, callback) {
   var child;
 
   if (process.platform === 'win32') {
@@ -56,28 +86,11 @@ Qpdf.encrypt = function(input, options, callback) {
 
   var outputStream = child.stdout;
 
-  function handleError(err) {
-    if (child) {
-      child.removeAllListeners('exit');
-      child.kill();
-    }
-
-    // call the callback if there is one
-    if (callback) {
-      callback(err);
-    }
-
-    outputStream = outputStream || new stream.Readable();
-
-    // if not, or there are listeners for errors, emit the error event
-    if (!callback || outputStream.listeners('error').length > 0) {
-      outputStream.emit('error', err);
-    }
-  }
-
-  child.once('error', handleError);
+  child.once('error', function (err) {
+    handleError(err, child, outputStream, callback);
+  });
   child.stderr.once('data', function(err) {
-    handleError(new Error(err || ''));
+    handleError(new Error(err || ''), child, outputStream, callback);
   });
 
   // return stdout stream so we can pipe
@@ -86,13 +99,34 @@ Qpdf.encrypt = function(input, options, callback) {
   } else {
     return outputStream;
   }
-};
+}
 
-// Qpdf.dcrypt = function(input, options, callback) {
-//   if (!options || !options.password) return callback(new Error('Password missing'));
+function handleError(err, child, outputStream, callback) {
+  if (child) {
+    child.removeAllListeners('exit');
+    child.kill();
+  } else if (typeof child === 'function') {
+    callback = child;
+  }
 
-//   var args = ['qpdf', '--dcrypt'];
-// };
+  // call the callback if there is one
+  if (callback) {
+    callback(err);
+  }
+
+  // set a default output stream if not present
+  if (typeof outputStream === 'function') {
+    callback = outputStream;
+    outputStream = new stream.Readable();
+  } else if (typeof outputStream === 'undefined') {
+    outputStream = new stream.Readable();
+  }
+
+  // if not, or there are listeners for errors, emit the error event
+  if (!callback || outputStream.listeners('error').length > 0) {
+    outputStream.emit('error', err);
+  }
+}
 
 function hypenate(variable) {
   return variable.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
