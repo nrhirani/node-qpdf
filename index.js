@@ -10,7 +10,7 @@ Qpdf.encrypt = function(input, options, callback) {
   // Defaults encryption to AES 256
   options.keyLength = options.keyLength || '256';
 
-  var args = ['qpdf', '--encrypt'];
+  var args = [Qpdf.command, '--encrypt'];
 
   // Push twice for user-password and owner-password
   args.push(options.password);
@@ -51,7 +51,7 @@ Qpdf.decrypt = function(input, password, callback) {
   if (!input) return handleError(new Error('Specify input file'), callback);
   if (!password) return handleError(new Error('Password missing'), callback);
 
-  var args = ['qpdf', '--decrypt'];
+  var args = [Qpdf.command, '--decrypt'];
 
   // Password
   args.push('--password=' + password);
@@ -132,4 +132,5 @@ function hypenate(variable) {
   return variable.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 }
 
+Qpdf.command = 'qpdf';
 module.exports = Qpdf;
