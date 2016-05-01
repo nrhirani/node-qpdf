@@ -1,6 +1,6 @@
 {
   "name": "node-qpdf",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "A Content Preserving transformations on PDFs wrapped around QPDF",
   "main": "index.js",
   "scripts": {
@@ -27,5 +27,5 @@
   "bugs": {
     "url": "https://github.com/nrhirani/node-qpdf/issues"
   },
-  "homepage": "https://github.com/nrhirani/node-qpdf#readme"
+  "homepage": "https://github.com/nrhirani/node-qpdf#node-qpdf"
 }
