@@ -1,6 +1,6 @@
 {
   "name": "node-qpdf",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A Content Preserving transformations on PDFs wrapped around QPDF",
   "main": "index.js",
   "scripts": {
