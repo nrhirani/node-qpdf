@@ -6,6 +6,11 @@ var Qpdf = {};
 Qpdf.encrypt = function(input, options, callback) {
   if (!input) return handleError(new Error('Specify input file'));
   if (!options || !options.password) return handleError(new Error('Password missing'));
+  if(options && options.outputFile) {
+    if(typeof options.outputFile != 'string' || options.outputFile === input) {
+      return handleError(new Error('Invlaid output file'));
+    }
+  }
 
   // Defaults encryption to AES 256
   options.keyLength = options.keyLength || '256';
@@ -26,8 +31,8 @@ Qpdf.encrypt = function(input, options, callback) {
     var restrictions = options.restrictions;
 
     for(var restriction in restrictions) {
-      var value = (restrictions.restriction !== '') ? '=' + restrictions.restriction : '';
-      args.push('--' + hypenate(restriction) + value);
+      var value = (restrictions[restriction] !== '') ? '=' + restrictions[restriction] : '';
+      args.push('--' + hyphenate(restriction) + value);
     }
   }
 
@@ -37,13 +42,36 @@ Qpdf.encrypt = function(input, options, callback) {
   // Input file path
   args.push(input);
 
-  // Print PDf on stdout
-  args.push('-');
-
+  if (options.outputFile) {
+    args.push(options.outputFile);
+  } else {
+  // Print PDF on stdout
+    args.push('-');
+  }
   // Execute command and return stdout for pipe
-  var outputStream = executeCommand(args, callback);
-  if (outputStream) {
-    return outputStream;
+  if (!options.outputFile) {
+    var outputStream = executeCommand(args);
+    if (outputStream) {
+      if (callback) {
+        return callback(null, outputStream);
+      } else {
+        return outputStream;
+      }
+    }
+  } else {
+    if (callback) {
+      executeCommand(args, callback);
+    } else {
+      return new Promise(function(resolve, reject) {
+        executeCommand(args, function(err, filePath) {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(filePath);
+          }
+        });
+      });
+    }
   }
 };
 
@@ -72,7 +100,10 @@ Qpdf.decrypt = function(input, password, callback) {
 function executeCommand(args, callback) {
   var child;
 
-  if (process.platform === 'win32') {
+  var output = args[args.length - 1];
+
+  // if on windows or not piping to stdout
+  if (process.platform === 'win32' || output !== '-') {
     child = spawn(args[0], args.slice(1));
   } else {
     // this nasty business prevents piping problems on linux
@@ -81,7 +112,7 @@ function executeCommand(args, callback) {
 
   // call the callback with null error when the process exits successfully
   if (callback) {
-    child.on('exit', function() { callback(null); });
+    child.on('exit', function() { callback(null, output); });
   }
 
   var outputStream = child.stdout;
@@ -94,11 +125,7 @@ function executeCommand(args, callback) {
   });
 
   // return stdout stream so we can pipe
-  if (callback) {
-    return callback(null, outputStream);
-  } else {
-    return outputStream;
-  }
+  return outputStream;
 }
 
 function handleError(err, child, outputStream, callback) {
@@ -128,7 +155,7 @@ function handleError(err, child, outputStream, callback) {
   }
 }
 
-function hypenate(variable) {
+function hyphenate(variable) {
   return variable.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 }
 
