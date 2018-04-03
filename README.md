@@ -33,6 +33,7 @@ qpdf.encrypt(localFilePath, options);
 The following are **required options**
 * `keyLength:` - a number which defines the encryption algorithm to be used. Values can be **40, 128 and 256** only.
 * `password:` - a string containing the secret password which will be further used to unlock the PDF.
+* `password:` - an object containing `user` and `owner` for set password for different roles.
 
 You might want to set other options for each encryption algorithm inside `restrictions:` JSON according to the `keyLength` you choose :-
 

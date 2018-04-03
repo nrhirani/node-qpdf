@@ -5,7 +5,6 @@ var Qpdf = {};
 
 Qpdf.encrypt = function(input, options, callback) {
   if (!input) return handleError(new Error('Specify input file'));
-  if (!options || !options.password) return handleError(new Error('Password missing'));
   if(options && options.outputFile) {
     if(typeof options.outputFile != 'string' || options.outputFile === input) {
       return handleError(new Error('Invlaid output file'));
@@ -18,8 +17,16 @@ Qpdf.encrypt = function(input, options, callback) {
   var args = [Qpdf.command, '--encrypt'];
 
   // Push twice for user-password and owner-password
-  args.push(options.password);
-  args.push(options.password);
+  if(typeof options.password === 'object') {
+    if(options.password.user === undefined || options.password.owner === undefined) {
+      return handleError(new Error('Specify owner and user password'));
+    }
+    args.push(options.password.user);
+    args.push(options.password.owner);
+  } else {
+    args.push(options.password);
+    args.push(options.password);
+  }
 
   // Specifying the key length
   args.push(options.keyLength);
