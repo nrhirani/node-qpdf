@@ -32,7 +32,7 @@ qpdf.encrypt(localFilePath, options);
 ### Options for Encryption
 The following are **required options**
 * `keyLength:` - a number which defines the encryption algorithm to be used. Values can be **40, 128 and 256** only.
-* `password:` - a string containing the secret password which will be further used to unlock the PDF.
+* `password:` - a string containing the secret password which will be further used to unlock the PDF or an object containing `user` and `owner` for setting password for different roles.
 
 You might want to set other options for each encryption algorithm inside `restrictions:` JSON according to the `keyLength` you choose :-
 
@@ -80,6 +80,25 @@ var options = {
 
 qpdf.encrypt(localFilePath, options, outputFilePath);
 ```
+or
+```
+var qpdf = require('node-qpdf');
+
+var options = {
+  keyLength: 40,
+  password: {
+    user: 'YOUR_PASSWORD_TO_ENCRYPT_FOR_USER',
+    owner: 'YOUR_PASSWORD_TO_ENCRYPT_FOR_OWNER'
+  },
+  restrictions: {
+    print: 'low',
+    useAes: 'y'
+  }
+};
+
+qpdf.encrypt(localFilePath, options, outputFilePath);
+```
+
 #### Render and Stream:
 ```
 var qpdf = require('node-qpdf');
