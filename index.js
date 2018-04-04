@@ -16,7 +16,7 @@ Qpdf.encrypt = function(input, options, callback) {
 
   var args = [Qpdf.command, '--encrypt'];
 
-  // Push twice for user-password and owner-password
+  // Set user-password and owner-password
   if(typeof options.password === 'object') {
     if(options.password.user === undefined || options.password.owner === undefined) {
       return handleError(new Error('Specify owner and user password'));
@@ -24,6 +24,7 @@ Qpdf.encrypt = function(input, options, callback) {
     args.push(options.password.user);
     args.push(options.password.owner);
   } else {
+    // Push twice for user-password and owner-password
     args.push(options.password);
     args.push(options.password);
   }
