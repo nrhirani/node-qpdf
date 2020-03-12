@@ -1,32 +1,31 @@
-# node-qpdf
-[![npm version](https://badge.fury.io/js/node-qpdf.svg)](https://badge.fury.io/js/node-qpdf) [![NPM Downloads](https://img.shields.io/npm/dt/node-qpdf.svg)](https://www.npmjs.com/package/node-qpdf) [![NPM Downloads](https://img.shields.io/npm/dm/node-qpdf.svg)](https://www.npmjs.com/package/node-qpdf) [![bitHound Code](https://www.bithound.io/github/nrhirani/node-qpdf/badges/code.svg)](https://www.bithound.io/github/nrhirani/node-qpdf) [![bitHound Overall Score](https://www.bithound.io/github/nrhirani/node-qpdf/badges/score.svg)](https://www.bithound.io/github/nrhirani/node-qpdf)
+# node-qpdf2
 
-A very simple wrapper for [qpdf](http://qpdf.sourceforge.net/) which is a content-preserving transformations on PDF files. It includes encrypting and decrypting PDF with AES 256, AES 128, RC4 (128 & 40) encryption algorithms.
+A very simple wrapper for [qpdf](https://github.com/qpdf/qpdf) which is a content-preserving transformations on PDF files. It includes encrypting and decrypting PDF with AES 256, AES 128, RC4 (128 & 40) encryption algorithms. This is a fork of [nrhirani/node-qpdf](https://github.com/nrhirani/node-qpdf)
 
 ## Dependencies
 * [Node.js](http://nodejs.org/)
-* [qpdf](http://qpdf.sourceforge.net/)
+* [qpdf](https://github.com/qpdf/qpdf)
 
 ## Installation
 1. Install qpdf:
-    * Download [qpdf](https://sourceforge.net/projects/qpdf/files/qpdf/6.0.0/)
+    * Download [qpdf](https://github.com/qpdf/qpdf/releases)
     * Read [qpdf manual](http://qpdf.sourceforge.net/files/qpdf-manual.html#ref.building) for installation instructions.
 2. Install node-qpdf:
     ```
-    npm install node-qpdf
+    npm install node-qpdf2
     ```
 
 ## Encryption
 You can encrypt your PDF by following:
 ```
-var qpdf = require('node-qpdf');
+var qpdf = require('node-qpdf2');
 
 var options = {
     keyLength: 128,
     password: 'YOUR_PASSWORD_TO_ENCRYPT'
 }
 
-qpdf.encrypt(localFilePath, options);
+qpdf.encrypt(localFilePath, options, outputFilePath);
 ```
 
 ### Options for Encryption
@@ -78,7 +77,7 @@ var options = {
     }
 }
 
-qpdf.encrypt(localFilePath, options, outputFilePath);
+qpdf.encrypt(inputFilePath, options, outputFilePath);
 ```
 or
 ```
@@ -96,31 +95,7 @@ var options = {
   }
 };
 
-qpdf.encrypt(localFilePath, options, outputFilePath);
-```
-
-#### Render and Stream:
-```
-var qpdf = require('node-qpdf');
-
-var options = {
-    keyLength: 256,
-    password: 'YOUR_PASSWORD_TO_ENCRYPT',
-    restrictions: {
-        modify: 'none',
-        extract: 'n'
-    }
-}
-
-var doc = qpdf.encrypt(localFilePath, options, outputFilePath);
-
-doc.stdout.pipe(res);
-
-res.writeHead(200, {
-    'Content-Type': 'application/pdf',
-    'Access-Control-Allow-Origin': '*',
-    'Content-Disposition': 'inline; filename=order.pdf'
-});
+qpdf.encrypt(inputFilePath, options, outputFilePath);
 ```
 
 ## Decryption
@@ -128,7 +103,7 @@ You can decrypt your PDF by following:
 ```
 var qpdf = require('node-qpdf');
 
-qpdf.decrypt(localFilePath, 'YOUR_PASSWORD_TO_DECRYPT_PDF');
+qpdf.decrypt(inputFilePath, 'YOUR_PASSWORD_TO_DECRYPT_PDF', outputFilePath);
 ```
 
 ### Examples
@@ -136,31 +111,17 @@ qpdf.decrypt(localFilePath, 'YOUR_PASSWORD_TO_DECRYPT_PDF');
 ```
 var qpdf = require('node-qpdf');
 
-qpdf.decrypt(localFilePath, 'YOUR_PASSWORD_TO_DECRYPT_PDF', outputFilePath);
-```
-#### Render and Stream:
-```
-var qpdf = require('node-qpdf');
-
-var doc = qpdf.decrypt(localFilePath, 'YOUR_PASSWORD_TO_DECRYPT_PDF', outputFilePath);
-
-doc.stdout.pipe(res);
-
-res.writeHead(200, {
-    'Content-Type': 'application/pdf',
-    'Access-Control-Allow-Origin': '*',
-    'Content-Disposition': 'inline; filename=order.pdf'
-});
+qpdf.decrypt(inputFilePath, 'YOUR_PASSWORD_TO_DECRYPT_PDF', outputFilePath);
 ```
 
 ## Meta
 
-Maintained by [Nishit Hirani](http://www.twitter.com/nrhirani)
+Maintained by [Kyle McNally](http://www.github.com/Sparticuz)
 
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/nrhirani/node-qpdf.
+Bug reports and pull requests are welcome on GitHub at https://github.com/Sparticuz/node-qpdf2.
 
 
 ## License

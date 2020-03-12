@@ -1,14 +1,16 @@
 {
-  "name": "node-qpdf",
-  "version": "1.0.3",
+  "name": "node-qpdf2",
+  "version": "0.0.1",
   "description": "A Content Preserving transformations on PDFs wrapped around QPDF",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "nyc mocha test/test.js",
+    "lint": "eslint 'src/**/*.ts'",
+    "compile": "tsc -p tsconfig.json"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nrhirani/node-qpdf.git"
+    "url": "git+https://github.com/Sparticuz/node-qpdf2.git"
   },
   "keywords": [
     "pdf",
@@ -26,10 +28,24 @@
     "rc4-128",
     "rc4-40"
   ],
-  "author": "Nishit Hirani <nrhirani@gmail.com>",
+  "author": "Kyle McNally <kyle@kmcnally.net>",
   "license": "MIT",
+  "types": "./types/index.d.ts",
   "bugs": {
-    "url": "https://github.com/nrhirani/node-qpdf/issues"
+    "url": "https://github.com/Sparticuz/node-qpdf2/issues"
   },
-  "homepage": "https://github.com/nrhirani/node-qpdf#node-qpdf"
+  "homepage": "https://github.com/Sparticuz/node-qpdf2",
+  "devDependencies": {
+    "@types/node": "^13.9.0",
+    "@typescript-eslint/eslint-plugin": "^2.23.0",
+    "@typescript-eslint/parser": "^2.23.0",
+    "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.0",
+    "mocha": "^7.1.0",
+    "nyc": "^15.0.0",
+    "prettier": "^1.19.1",
+    "typescript": "^3.8.3"
+  }
 }
