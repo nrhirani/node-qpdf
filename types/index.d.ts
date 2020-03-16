@@ -3,12 +3,12 @@
 declare module "node-qpdf2" {
   export interface QPdfOptions {
     outputFile ?: string;
-    keyLength : string;
+    keyLength : number;
     password : {
       user : string;
       owner : string;
     } | string;
-    restrictions: {
+    restrictions ?: {
       print ?: "y" | "n" | "full" | "low" | "none";
       modify ?: "y" | "n" | "all" | "annotate" | "form" | "assembly" | "none";
       extract ?: "y" | "n";
@@ -17,4 +17,8 @@ declare module "node-qpdf2" {
       accessibility ?: "y" | "n";
     }
   }
+  export function encrypt(inputFile: string, options: QPdfOptions, outputFile: string): Promise<string>
+
+  export function decrypt(inputFile: string, password: string, outputFile : string): Promise<string>;
+
 }
