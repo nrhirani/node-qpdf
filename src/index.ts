@@ -1,7 +1,7 @@
 import { promisify } from 'util';
 import { QPdfOptions } from 'node-qpdf2';
+import { existsSync } from 'fs';
 
-const access = promisify(require('fs').access);
 const execFile = promisify(require("child_process").execFile);
 
 const hyphenate = (variable: string): string => variable.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
@@ -14,13 +14,10 @@ const execute = async (args: string[]): Promise<string> => {
   return child.stdout;
 }
 
-const fileExists = (input: string): boolean | void => {
-  try {
-    access(input, (error: Error) => {
-      if(error) return false;
-      return true;
-    });
-  } catch (e) {
+const fileExists = async (file: string): Promise<boolean> => {
+  if(existsSync(file)){
+    return true;
+  } else {
     return false;
   }
 }
@@ -28,13 +25,13 @@ const fileExists = (input: string): boolean | void => {
 export const encrypt = async (input: string, options: QPdfOptions, output ?: string): Promise<string> => {
   if (!input) return 'Please specify input file';
   if (!fileExists(input)) return "Input file doesn't exist";
-  if (output) if (fileExists(output)) return "Output file already exists";
+  //if (output) if (fileExists(output)) return "Output file already exists";
 
   const args = ['--encrypt'];
 
   // Set user-password and owner-password
   if(typeof options.password === 'object') {
-    if(options.password.user === undefined || options.password.owner === undefined) {
+    if(options.password.user === undefined || options.password.user === null || options.password.owner === undefined || options.password.owner === null) {
       return 'Please specify both owner and user passwords';
     }
     args.push(options.password.user);
@@ -46,10 +43,10 @@ export const encrypt = async (input: string, options: QPdfOptions, output ?: str
   }
 
   // Defaults encryption to AES 256
-  options.keyLength = options.keyLength || '256';
+  options.keyLength = options.keyLength || 256;
 
   // Specifying the key length
-  args.push(options.keyLength);
+  args.push(options.keyLength.toString());
 
   // Add Resctrictions for encryption
   if (options.restrictions) {
