@@ -7,6 +7,8 @@ const execFile = promisify(require("child_process").execFile);
 const hyphenate = (variable: string): string => variable.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 
 const execute = async (args: string[]): Promise<string> => {
+  // If we are running on AWS Lambda, add AppImage extract and run because Lambda does not support FUSE
+  if (process.env.LAMBDA_TASK_ROOT) { args.push('--appimage-extract-and-run') }
   const child = await execFile('qpdf', args);
   if(child.stderr) {
     throw child.stderr;

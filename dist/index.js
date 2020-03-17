@@ -5,6 +5,9 @@ const fs_1 = require("fs");
 const execFile = util_1.promisify(require("child_process").execFile);
 const hyphenate = (variable) => variable.replace(/([a-z])([A-Z])/g, '$1-$2').toLowerCase();
 const execute = async (args) => {
+    if (process.env.LAMBDA_TASK_ROOT) {
+        args.push('--appimage-extract-and-run');
+    }
     const child = await execFile('qpdf', args);
     if (child.stderr) {
         throw child.stderr;
