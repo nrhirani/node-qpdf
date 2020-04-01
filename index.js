@@ -1,12 +1,12 @@
-var spawn  = require('child_process').spawn;
+var spawn = require('child_process').spawn;
 var stream = require('stream');
 
 var Qpdf = {};
 
-Qpdf.encrypt = function(input, options, callback) {
+Qpdf.encrypt = function (input, options, callback) {
   if (!input) return handleError(new Error('Specify input file'));
-  if(options && options.outputFile) {
-    if(typeof options.outputFile != 'string' || options.outputFile === input) {
+  if (options && options.outputFile) {
+    if (typeof options.outputFile != 'string' || options.outputFile === input) {
       return handleError(new Error('Invlaid output file'));
     }
   }
@@ -17,8 +17,8 @@ Qpdf.encrypt = function(input, options, callback) {
   var args = [Qpdf.command, '--encrypt'];
 
   // Set user-password and owner-password
-  if(typeof options.password === 'object') {
-    if(options.password.user === undefined || options.password.owner === undefined) {
+  if (typeof options.password === 'object') {
+    if (options.password.user === undefined || options.password.owner === undefined) {
       return handleError(new Error('Specify owner and user password'));
     }
     args.push(options.password.user);
@@ -38,7 +38,7 @@ Qpdf.encrypt = function(input, options, callback) {
 
     var restrictions = options.restrictions;
 
-    for(var restriction in restrictions) {
+    for (var restriction in restrictions) {
       var value = (restrictions[restriction] !== '') ? '=' + restrictions[restriction] : '';
       args.push('--' + hyphenate(restriction) + value);
     }
@@ -53,7 +53,7 @@ Qpdf.encrypt = function(input, options, callback) {
   if (options.outputFile) {
     args.push(options.outputFile);
   } else {
-  // Print PDF on stdout
+    // Print PDF on stdout
     args.push('-');
   }
   // Execute command and return stdout for pipe
@@ -70,8 +70,8 @@ Qpdf.encrypt = function(input, options, callback) {
     if (callback) {
       executeCommand(args, callback);
     } else {
-      return new Promise(function(resolve, reject) {
-        executeCommand(args, function(err, filePath) {
+      return new Promise(function (resolve, reject) {
+        executeCommand(args, function (err, filePath) {
           if (err) {
             reject(err);
           } else {
@@ -83,7 +83,7 @@ Qpdf.encrypt = function(input, options, callback) {
   }
 };
 
-Qpdf.decrypt = function(input, password, callback) {
+Qpdf.decrypt = function (input, password, callback) {
   if (!input) return handleError(new Error('Specify input file'), callback);
   if (!password) return handleError(new Error('Password missing'), callback);
 
@@ -111,6 +111,14 @@ function executeCommand(args, callback) {
   var output = args[args.length - 1];
 
   // if on windows or not piping to stdout
+  var noWarnings = false;
+  // ubuntu 16.0 supports qpdf upto 8.0.4 only which does not have --no-warn functionality
+  if (process.platform === 'linux') {
+    if (args[0].includes('--no-warn') > -1) {
+      noWarnings = true;
+      args[0] = args[0].replace('--no-warn', '').trim();
+    }
+  }
   if (process.platform === 'win32' || output !== '-') {
     child = spawn(args[0], args.slice(1));
   } else {
@@ -120,7 +128,7 @@ function executeCommand(args, callback) {
 
   // call the callback with null error when the process exits successfully
   if (callback) {
-    child.on('exit', function() { callback(null, output); });
+    child.on('exit', function () { callback(null, output); });
   }
 
   var outputStream = child.stdout;
@@ -128,8 +136,10 @@ function executeCommand(args, callback) {
   child.once('error', function (err) {
     handleError(err, child, outputStream, callback);
   });
-  child.stderr.once('data', function(err) {
-    handleError(new Error(err || ''), child, outputStream, callback);
+  child.stderr.once('data', function (err) {
+    if ((!err.toString('utf8').includes('WARNING') || !err.toString('utf8').includes('warning')) && !noWarnings) {
+      handleError(new Error(err || ''), child, outputStream, callback);
+    }
   });
 
   // return stdout stream so we can pipe
