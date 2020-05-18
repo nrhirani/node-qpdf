@@ -27,6 +27,7 @@
     "target": "es2019",
     "outDir": "dist",
     "rootDir": "src",
+    "declaration": true,
     "typeRoots": [
       "./types",
       "./node_modules/@types"

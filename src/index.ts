@@ -1,6 +1,24 @@
 import { promisify } from 'util';
-import { QPdfOptions } from 'node-qpdf2';
 import { existsSync } from 'fs';
+interface Restrictions {
+  print?: "y" | "n" | "full" | "low" | "none";
+  modify?: "y" | "n" | "all" | "annotate" | "form" | "assembly" | "none";
+  extract?: "y" | "n";
+  annotate?: "y" | "n";
+  useAes?: "y" | "n";
+  accessibility?: "y" | "n";
+}
+export interface QPdfOptions {
+  outputFile?: string;
+  keyLength?: number;
+  password:
+    | string
+    | {
+        user: string;
+        owner: string;
+      };
+  restrictions?: Restrictions;
+}
 
 const execFile = promisify(require("child_process").execFile);
 
