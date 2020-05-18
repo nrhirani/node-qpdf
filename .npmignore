@@ -1,0 +1,5 @@
+.eslintcache
+test/**
+.nyc_output/**
+.vscode/**
+src/**

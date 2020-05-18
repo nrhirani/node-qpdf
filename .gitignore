@@ -6,3 +6,6 @@ jspm_packages
 .serverless
 .vscode
 .nyc_output
+
+dist/**
+.eslintcache
