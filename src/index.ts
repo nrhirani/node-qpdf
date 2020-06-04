@@ -4,21 +4,21 @@ import { existsSync } from "fs";
 import { execFile } from "child_process";
 
 interface Restrictions {
-  print?: "y" | "n" | "full" | "low" | "none";
-  modify?: "y" | "n" | "all" | "annotate" | "form" | "assembly" | "none";
-  extract?: "y" | "n";
-  annotate?: "y" | "n";
-  useAes?: "y" | "n";
   accessibility?: "y" | "n";
+  annotate?: "y" | "n";
+  extract?: "y" | "n";
+  modify?: "y" | "n" | "all" | "annotate" | "form" | "assembly" | "none";
+  print?: "y" | "n" | "full" | "low" | "none";
+  useAes?: "y" | "n";
 }
 export interface QPdfOptions {
-  outputFile?: string;
   keyLength?: number;
+  outputFile?: string;
   password:
     | string
     | {
-        user: string;
         owner: string;
+        user: string;
       };
   restrictions?: Restrictions;
 }
