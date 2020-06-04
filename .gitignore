@@ -9,3 +9,7 @@ jspm_packages
 
 dist/**
 .eslintcache
+test/decrypted.pdf
+test/encrypted.pdf
+test/file-to-buffer.pdf
+test/file-to-file.pdf
