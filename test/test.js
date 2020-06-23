@@ -74,6 +74,19 @@ test("Should encrypt a file", async (t) => {
   }
 });
 
+test("Should encrypt a file with user and owner passwords", async (t) => {
+  try {
+    await qpdf.encrypt(sample, {
+      ...options,
+      password: { user: "test", owner: "admin" },
+    });
+    t.pass();
+  } catch (error) {
+    console.log(error);
+    t.fail();
+  }
+});
+
 test("Should decrypt a file", async (t) => {
   try {
     await qpdf.decrypt(sample, password, decryptedFile);
