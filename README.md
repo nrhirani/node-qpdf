@@ -3,13 +3,11 @@
 A very simple wrapper for [qpdf](https://github.com/qpdf/qpdf) which is a content-preserving transformations on PDF files. It includes encrypting and decrypting PDF with AES 256, AES 128, RC4 (128 & 40) encryption algorithms. This is a fork of [nrhirani/node-qpdf](https://github.com/nrhirani/node-qpdf), adding Promises and Types.
 
 ## Dependencies
-* [Node.js](http://nodejs.org/)
 * [qpdf](https://github.com/qpdf/qpdf)
 
 ## Installation
 1. Install qpdf:
     * Download [qpdf](https://github.com/qpdf/qpdf/releases)
-    * Read [qpdf manual](http://qpdf.sourceforge.net/files/qpdf-manual.html#ref.building) for installation instructions.
 2. Install node-qpdf:
     ```
     npm install node-qpdf2
@@ -18,14 +16,14 @@ A very simple wrapper for [qpdf](https://github.com/qpdf/qpdf) which is a conten
 ## Encryption
 You can encrypt your PDF by following:
 ```
-var qpdf = require('node-qpdf2');
+import { encrypt } from "node-qpdf2";
 
-var options = {
-    keyLength: 128,
+const options = {
+    keyLength: 256,
     password: 'YOUR_PASSWORD_TO_ENCRYPT'
 }
 
-qpdf.encrypt(localFilePath, options, outputFilePath);
+await encrypt(localFilePath, options, outputFilePath);
 ```
 
 ### Options for Encryption
@@ -33,7 +31,7 @@ The following are **required options**
 * `keyLength:` - a number which defines the encryption algorithm to be used. Values can be **40, 128 and 256** only.
 * `password:` - a string containing the secret password which will be further used to unlock the PDF or an object containing `user` and `owner` for setting password for different roles.
 
-You might want to set other options for each encryption algorithm inside `restrictions:` JSON according to the `keyLength` you choose :-
+You might want to set other options for each encryption algorithm inside `restrictions:` according to the `keyLength` you choose :-
 
 *Key Length:* **40**
 
@@ -77,7 +75,7 @@ const options = {
     }
 }
 
-await qpdf.encrypt(inputFilePath, options, outputFilePath);
+await encrypt(inputFilePath, options, outputFilePath);
 ```
 or
 ```
@@ -95,15 +93,15 @@ const options = {
   }
 };
 
-await qpdf.encrypt(inputFilePath, options, outputFilePath);
+await encrypt(inputFilePath, options, outputFilePath);
 ```
 
 ## Decryption
 You can decrypt your PDF by following:
 ```
-import { encrypt } from "node-qpdf2";
+import { decrypt } from "node-qpdf2";
 
-await qpdf.decrypt(inputFilePath, 'YOUR_PASSWORD_TO_DECRYPT_PDF', outputFilePath);
+await decrypt(inputFilePath, 'YOUR_PASSWORD_TO_DECRYPT_PDF', outputFilePath);
 ```
 
 ## Meta
