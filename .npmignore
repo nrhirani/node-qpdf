@@ -3,3 +3,7 @@ test/**
 .nyc_output/**
 .vscode/**
 src/**
+.editorconfig
+.eslintrc.json
+tsconfig.json
+.github/**
