@@ -66,9 +66,9 @@ You might want to set other options for each encryption algorithm inside `restri
 ### Examples
 #### Render and Save:
 ```
-var qpdf = require('node-qpdf');
+import { encrypt } from "node-qpdf2";
 
-var options = {
+const options = {
     keyLength: 128,
     password: 'YOUR_PASSWORD_TO_ENCRYPT',
     restrictions: {
@@ -77,13 +77,13 @@ var options = {
     }
 }
 
-qpdf.encrypt(inputFilePath, options, outputFilePath);
+await qpdf.encrypt(inputFilePath, options, outputFilePath);
 ```
 or
 ```
-var qpdf = require('node-qpdf');
+import { encrypt } from "node-qpdf2";
 
-var options = {
+const options = {
   keyLength: 40,
   password: {
     user: 'YOUR_PASSWORD_TO_ENCRYPT_FOR_USER',
@@ -95,23 +95,15 @@ var options = {
   }
 };
 
-qpdf.encrypt(inputFilePath, options, outputFilePath);
+await qpdf.encrypt(inputFilePath, options, outputFilePath);
 ```
 
 ## Decryption
 You can decrypt your PDF by following:
 ```
-var qpdf = require('node-qpdf');
+import { encrypt } from "node-qpdf2";
 
-qpdf.decrypt(inputFilePath, 'YOUR_PASSWORD_TO_DECRYPT_PDF', outputFilePath);
-```
-
-### Examples
-#### Render and Save:
-```
-var qpdf = require('node-qpdf');
-
-qpdf.decrypt(inputFilePath, 'YOUR_PASSWORD_TO_DECRYPT_PDF', outputFilePath);
+await qpdf.decrypt(inputFilePath, 'YOUR_PASSWORD_TO_DECRYPT_PDF', outputFilePath);
 ```
 
 ## Meta
