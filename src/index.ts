@@ -78,16 +78,17 @@ export const encrypt = async (
   // Specifying the key length
   callArguments.push(options.keyLength.toString());
 
-  // Add Resctrictions for encryption
+  // Add Restrictions for encryption
   if (options.restrictions) {
     if (typeof options.restrictions !== "object") return "Invalid Restrictions";
-
-    const { restrictions } = options;
-
-    for (const restriction of options.restrictions) {
-      const value =
-        restrictions[restriction] !== "" ? `=${restrictions[restriction]}` : "";
-      callArguments.push(`--${hyphenate(restriction)}${value}`);
+    for (const [restriction, value] of Object.entries(options.restrictions)) {
+      // const value =
+      //  restrictions[restriction] !== "" ? `=${restrictions[restriction]}` : "";
+      if (restriction === "useAes" && options.keyLength === 256) {
+        // use-aes is always on with 256 bit keyLength
+      } else {
+        callArguments.push(`--${hyphenate(restriction)}=${value as string}`);
+      }
     }
   }
 

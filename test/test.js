@@ -50,7 +50,7 @@ test("should throw if only user or owner password is submitted", async (t) => {
   }
 });
 
-test("should throw if restrctions are wrong", async (t) => {
+test("should throw if restrictions are wrong", async (t) => {
   try {
     const results = await qpdf.encrypt(sample, {
       ...options,
@@ -127,6 +127,22 @@ test("encrypt file to buffer", async (t) => {
     );
     t.pass();
   } catch (error) {
+    t.fail();
+  }
+});
+
+test("should allow restrictions", async (t) => {
+  try {
+    const results = await qpdf.encrypt(sample, {
+      ...options,
+      restrictions: {
+        print: "none",
+        useAes: "y",
+      },
+    });
+    t.pass();
+  } catch (error) {
+    console.log(error);
     t.fail();
   }
 });
