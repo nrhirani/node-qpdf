@@ -1,7 +1,6 @@
 /* eslint-disable no-param-reassign */
-import { promisify } from "util";
 import { existsSync } from "fs";
-import { execFile } from "child_process";
+import { spawn } from "child_process";
 
 interface Restrictions {
   accessibility?: "y" | "n";
@@ -23,17 +22,26 @@ export interface QPdfOptions {
   restrictions?: Restrictions;
 }
 
-const execFilePromise = promisify(execFile);
-
 const hyphenate = (variable: string): string =>
   variable.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
 
-const execute = async (callArguments: string[]): Promise<string> => {
-  const { stderr, stdout } = await execFilePromise("qpdf", callArguments);
-  if (stderr) {
-    throw new Error(stderr);
-  }
-  return stdout;
+const execute = (callArguments: string[]): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const process = spawn("qpdf", callArguments);
+    let output = "";
+    process.stdout.on("data", (data) => {
+      output += data;
+    });
+    process.on("close", () => {
+      resolve(output);
+    });
+    process.stderr.on("data", (data) => {
+      reject(data);
+    });
+    process.on("error", (error) => {
+      reject(error);
+    });
+  });
 };
 
 const fileExists = (file: string): boolean => {
@@ -82,8 +90,6 @@ export const encrypt = async (
   if (options.restrictions) {
     if (typeof options.restrictions !== "object") return "Invalid Restrictions";
     for (const [restriction, value] of Object.entries(options.restrictions)) {
-      // const value =
-      //  restrictions[restriction] !== "" ? `=${restrictions[restriction]}` : "";
       if (restriction === "useAes" && options.keyLength === 256) {
         // use-aes is always on with 256 bit keyLength
       } else {
