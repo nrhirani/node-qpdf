@@ -7,7 +7,7 @@ Qpdf.encrypt = function(input, options, callback) {
   if (!input) return handleError(new Error('Specify input file'));
   if(options && options.outputFile) {
     if(typeof options.outputFile != 'string' || options.outputFile === input) {
-      return handleError(new Error('Invlaid output file'));
+      return handleError(new Error('Invalid output file'));
     }
   }
 
