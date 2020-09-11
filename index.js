@@ -5,9 +5,9 @@ var Qpdf = {};
 
 Qpdf.encrypt = function(input, options, callback) {
   if (!input) return handleError(new Error('Specify input file'));
-  if(options && options.outputFile) {
-    if(typeof options.outputFile != 'string' || options.outputFile === input) {
-      return handleError(new Error('Invlaid output file'));
+  if (options && options.outputFile) {
+    if (typeof options.outputFile != 'string' || options.outputFile === input) {
+      return handleError(new Error('Invalid output file'));
     }
   }
 
@@ -17,8 +17,8 @@ Qpdf.encrypt = function(input, options, callback) {
   var args = [Qpdf.command, '--encrypt'];
 
   // Set user-password and owner-password
-  if(typeof options.password === 'object') {
-    if(options.password.user === undefined || options.password.owner === undefined) {
+  if (typeof options.password === 'object') {
+    if (options.password.user === undefined || options.password.owner === undefined) {
       return handleError(new Error('Specify owner and user password'));
     }
     args.push(options.password.user);
@@ -32,13 +32,13 @@ Qpdf.encrypt = function(input, options, callback) {
   // Specifying the key length
   args.push(options.keyLength);
 
-  // Add Resctrictions for encryption
+  // Add Restrictions for encryption
   if (options.restrictions) {
     if (typeof options.restrictions !== 'object') return handleError(new Error('Invalid Restrictions'));
 
     var restrictions = options.restrictions;
 
-    for(var restriction in restrictions) {
+    for (var restriction in restrictions) {
       var value = (restrictions[restriction] !== '') ? '=' + restrictions[restriction] : '';
       args.push('--' + hyphenate(restriction) + value);
     }
@@ -56,6 +56,7 @@ Qpdf.encrypt = function(input, options, callback) {
   // Print PDF on stdout
     args.push('-');
   }
+
   // Execute command and return stdout for pipe
   if (!options.outputFile) {
     var outputStream = executeCommand(args);
@@ -84,8 +85,8 @@ Qpdf.encrypt = function(input, options, callback) {
 };
 
 Qpdf.decrypt = function(input, password, callback) {
-  if (!input) return handleError(new Error('Specify input file'), callback);
-  if (!password) return handleError(new Error('Password missing'), callback);
+  if (!input) return handleError(new Error('Specify input file'), null, callback);
+  if (!password) return handleError(new Error('Password missing'), null, callback);
 
   var args = [Qpdf.command, '--decrypt'];
 
@@ -126,24 +127,17 @@ function executeCommand(args, callback) {
   var outputStream = child.stdout;
 
   child.once('error', function (err) {
-    handleError(err, child, outputStream, callback);
+    handleError(err, outputStream, callback);
   });
   child.stderr.once('data', function(err) {
-    handleError(new Error(err || ''), child, outputStream, callback);
+    handleError(new Error(err || ''), outputStream, callback);
   });
 
   // return stdout stream so we can pipe
   return outputStream;
 }
 
-function handleError(err, child, outputStream, callback) {
-  if (child) {
-    child.removeAllListeners('exit');
-    child.kill();
-  } else if (typeof child === 'function') {
-    callback = child;
-  }
-
+function handleError(err, outputStream, callback) {
   // call the callback if there is one
   if (callback) {
     callback(err);
