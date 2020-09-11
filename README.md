@@ -23,11 +23,24 @@ var qpdf = require('node-qpdf');
 
 var options = {
     keyLength: 128,
-    password: 'YOUR_PASSWORD_TO_ENCRYPT'
+    password: 'YOUR_PASSWORD_TO_ENCRYPT',
+    outputFile: 'filename.pdf'
 }
 
-qpdf.encrypt(localFilePath, options);
+qpdf.encrypt(localFilePath, options, callback);
 ```
+
+## Callbacks
+Node-pdf supports both callbacks and promises
+```
+qpdf.encrypt(localFilePath, options, callback);
+```
+AND
+
+```
+await qpdf.encrypt(localFilePath, options);
+```
+
 
 ### Options for Encryption
 The following are **required options**
@@ -78,7 +91,7 @@ var options = {
     }
 }
 
-qpdf.encrypt(localFilePath, options, outputFilePath);
+qpdf.encrypt(localFilePath, options, callback);
 ```
 or
 ```
@@ -96,7 +109,7 @@ var options = {
   }
 };
 
-qpdf.encrypt(localFilePath, options, outputFilePath);
+qpdf.encrypt(localFilePath, options, callback);
 ```
 
 #### Render and Stream:
@@ -112,7 +125,7 @@ var options = {
     }
 }
 
-var doc = qpdf.encrypt(localFilePath, options, outputFilePath);
+var doc = qpdf.encrypt(localFilePath, options);
 
 doc.stdout.pipe(res);
 
@@ -136,13 +149,13 @@ qpdf.decrypt(localFilePath, 'YOUR_PASSWORD_TO_DECRYPT_PDF');
 ```
 var qpdf = require('node-qpdf');
 
-qpdf.decrypt(localFilePath, 'YOUR_PASSWORD_TO_DECRYPT_PDF', outputFilePath);
+qpdf.decrypt(localFilePath, 'YOUR_PASSWORD_TO_DECRYPT_PDF', callback);
 ```
 #### Render and Stream:
 ```
 var qpdf = require('node-qpdf');
 
-var doc = qpdf.decrypt(localFilePath, 'YOUR_PASSWORD_TO_DECRYPT_PDF', outputFilePath);
+var doc = qpdf.decrypt(localFilePath, 'YOUR_PASSWORD_TO_DECRYPT_PDF', callback);
 
 doc.stdout.pipe(res);
 
