@@ -129,6 +129,7 @@ function executeCommand(args, callback) {
   child.once('error', function (err) {
     handleError(err, outputStream, callback);
   });
+
   child.stderr.once('data', function(err) {
     handleError(new Error(err || ''), outputStream, callback);
   });
@@ -138,10 +139,11 @@ function executeCommand(args, callback) {
 }
 
 function handleError(err, outputStream, callback) {
+  /*This cauces callback to be called twice (once on error, once on exit) */
   // call the callback if there is one
-  if (callback) {
-    callback(err);
-  }
+  // if (callback) {
+  //   callback(err);
+  // }
 
   // set a default output stream if not present
   if (typeof outputStream === 'function') {
