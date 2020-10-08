@@ -1,5 +1,10 @@
 # node-qpdf2
 
+![Node.js CI](https://github.com/Sparticuz/node-qpdf2/workflows/Node.js%20CI/badge.svg)
+![CodeQL](https://github.com/Sparticuz/node-qpdf2/workflows/Code%20scanning%20-%20action/badge.svg)
+![npm](https://img.shields.io/npm/v/node-qpdf2)
+![npm](https://img.shields.io/npm/dt/node-qpdf2)
+
 A very simple wrapper for [qpdf](https://github.com/qpdf/qpdf) which is a content-preserving transformations on PDF files. It includes encrypting and decrypting PDF with AES 256, AES 128, RC4 (128 & 40) encryption algorithms. This is a fork of [nrhirani/node-qpdf](https://github.com/nrhirani/node-qpdf), adding Promises and Types.
 
 ## Dependencies
