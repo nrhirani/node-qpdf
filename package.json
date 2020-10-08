@@ -4,12 +4,12 @@
   "description": "A Content Preserving transformations on PDFs wrapped around QPDF",
   "main": "./dist/index.js",
   "scripts": {
-    "test": "nyc ava --timeout=30s",
+    "test": "npm run compile && nyc ava --timeout=30s",
     "lint": "eslint 'src/**/*.ts' --cache",
     "compile": "tsc -p tsconfig.json"
   },
   "engines": {
-    "node": ">=10"
+    "node": ">=10.18.0"
   },
   "repository": {
     "type": "git",

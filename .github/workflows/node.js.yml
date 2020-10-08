@@ -20,7 +20,7 @@ jobs:
 
     steps:
     - name: Install QPDF
-      run: sudo apt-get install qpdf 
+      run: sudo apt install -y qpdf
     - uses: actions/checkout@v2
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v1
