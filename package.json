@@ -4,12 +4,13 @@
   "description": "A Content Preserving transformations on PDFs wrapped around QPDF",
   "main": "./dist/index.js",
   "scripts": {
-    "test": "npm run compile && nyc ava --timeout=30s",
+    "pretest": "npm run build",
+    "test": "nyc ava --timeout=30s",
     "lint": "eslint 'src/**/*.ts' --cache",
-    "compile": "tsc -p tsconfig.json"
+    "build": "tsc -p tsconfig.json"
   },
   "engines": {
-    "node": ">=10.18.0"
+    "node": ">=10.17.0"
   },
   "repository": {
     "type": "git",
@@ -39,8 +40,8 @@
   },
   "homepage": "https://github.com/Sparticuz/node-qpdf2",
   "devDependencies": {
-    "@sparticuz/eslint-config": "^3.3.3",
-    "@types/node": "^14.11.5",
+    "@sparticuz/eslint-config": "^3.3.4",
+    "@types/node": "^14.11.8",
     "@typescript-eslint/eslint-plugin": "^4.4.0",
     "@typescript-eslint/parser": "^4.4.0",
     "ava": "^3.13.0",
