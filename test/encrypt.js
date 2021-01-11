@@ -43,6 +43,15 @@ test("Should encrypt a file with user and owner passwords", async (t) => {
   }
 });
 
+test("Should encrypt File without a password", async (t) => {
+  try {
+    await qpdf.encrypt(sample, { password: "" }, "test/file-to-file-no-pw.pdf");
+    t.pass();
+  } catch {
+    t.fail();
+  }
+});
+
 test("should allow restrictions", async (t) => {
   try {
     await qpdf.encrypt(sample, {
