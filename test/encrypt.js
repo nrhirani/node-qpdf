@@ -1,4 +1,3 @@
-const fs = require("fs");
 const test = require("ava");
 const qpdf = require("../dist").default;
 

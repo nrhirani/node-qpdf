@@ -6,7 +6,7 @@
   "scripts": {
     "pretest": "npm run build",
     "test": "nyc ava --timeout=30s",
-    "lint": "eslint 'src/**/*.[j,t]s' --cache",
+    "lint": "eslint '**/*.[j,t]s' --cache",
     "build": "tsc -p tsconfig.json"
   },
   "engines": {
