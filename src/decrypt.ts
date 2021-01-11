@@ -13,10 +13,10 @@ export default async (
   const callArguments = ["--decrypt"];
 
   // Password
-  callArguments.push(`--password=${password.replace(/([\s"$'\\`])/g, "\\$1")}`);
+  callArguments.push(`--password=${password}`);
 
   // Input file path
-  callArguments.push(input.replace(/([\s"$'\\`])/g, "\\$1"));
+  callArguments.push(input);
 
   // Print PDF on stdout
   if (output) {

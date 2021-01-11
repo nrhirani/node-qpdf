@@ -13,3 +13,5 @@ test/decrypted.pdf
 test/encrypted.pdf
 test/file-to-buffer.pdf
 test/file-to-file.pdf
+test/file to file.pdf
+test/different-passwords.pdf

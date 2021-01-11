@@ -1,3 +1,4 @@
+const fs = require("fs");
 const test = require("ava");
 const qpdf = require("../dist").default;
 
@@ -11,6 +12,15 @@ const options = {
 test("Should encrypt File -> File", async (t) => {
   try {
     await qpdf.encrypt(sample, options, "test/file-to-file.pdf");
+    t.pass();
+  } catch {
+    t.fail();
+  }
+});
+
+test("Should encrypt a file with a space", async (t) => {
+  try {
+    await qpdf.encrypt("test/dummy copy.pdf", options, "test/file to file.pdf");
     t.pass();
   } catch {
     t.fail();

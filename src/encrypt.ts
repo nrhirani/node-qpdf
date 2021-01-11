@@ -72,7 +72,7 @@ export default async (
   callArguments.push("--");
 
   // Input file path
-  callArguments.push(input.replace(/([\s"$'\\`])/g, "\\$1"));
+  callArguments.push(input);
 
   if (output) {
     callArguments.push(output);

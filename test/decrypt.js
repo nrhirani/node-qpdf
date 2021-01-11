@@ -17,6 +17,22 @@ test("Should decrypt a File -> File", async (t) => {
   }
 });
 
+test("Should encrypt a file with a space", async (t) => {
+  try {
+    await qpdf.encrypt(
+      "test/dummy copy.pdf",
+      { password },
+      "test/file to file.pdf"
+    );
+    await qpdf.decrypt("test/file to file.pdf", password, decryptedFile);
+    t.pass();
+  } catch {
+    t.fail();
+  }
+});
+
+
+
 test("should not work if no input file is specified for decrypt", async (t) => {
   try {
     const results = await qpdf.decrypt("", password);
