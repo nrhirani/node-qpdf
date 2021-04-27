@@ -55,16 +55,6 @@ test("should not work if no input file is specified for decrypt", async (t) => {
   }
 });
 
-test("should not work if no password entered for decrypt", async (t) => {
-  try {
-    const results = await qpdf.decrypt("test/file-to-file.pdf", "");
-    if (results === "Password missing") {
-      t.pass();
-    }
-  } catch {
-    t.fail();
-  }
-});
 
 test.todo("Should decrypt a File -> Buffer");
 
