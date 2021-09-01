@@ -166,3 +166,7 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/nrhira
 ## License
 
 The npm package is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+
+## Supporters
+
+### [Bigpdfconverter](https://www.bigpdfconverter.com)
