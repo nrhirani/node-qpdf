@@ -14,9 +14,9 @@ export default (callArguments: string[]): Promise<string> => {
     process.addListener("error", reject);
     process.on("close", (code) => {
       if (code !== 0) {
-        reject(stderr.join());
+        reject(stderr.join(","));
       } else {
-        resolve(stdout.join());
+        resolve(stdout.join(","));
       }
     });
   });

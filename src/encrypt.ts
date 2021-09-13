@@ -24,6 +24,7 @@ export default async (
   input: string,
   options: QPdfOptions,
   output?: string
+  // eslint-disable-next-line sonarjs/cognitive-complexity
 ): Promise<string> => {
   if (!input) return "Please specify input file";
   if (!fileExists(input)) return "Input file doesn't exist";
@@ -41,12 +42,10 @@ export default async (
     ) {
       return "Please specify both owner and user passwords";
     }
-    callArguments.push(options.password.user);
-    callArguments.push(options.password.owner);
+    callArguments.push(options.password.user, options.password.owner);
   } else {
     // Push twice for user-password and owner-password
-    callArguments.push(options.password);
-    callArguments.push(options.password);
+    callArguments.push(options.password, options.password);
   }
 
   // Defaults encryption to AES 256
@@ -68,11 +67,8 @@ export default async (
     }
   }
 
-  // Marks end of --encrypt options
-  callArguments.push("--");
-
-  // Input file path
-  callArguments.push(input);
+  // Marks end of --encrypt options, Input file path
+  callArguments.push("--", input);
 
   if (output) {
     callArguments.push(output);
