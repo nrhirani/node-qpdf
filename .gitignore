@@ -1,19 +1,5 @@
-# package directories
 node_modules
-jspm_packages
-
-# Serverless directories
-.serverless
-.vscode
-.nyc_output
-
 dist/**
 .eslintcache
-test/decrypted.pdf
-test/encrypted.pdf
-test/file-to-buffer.pdf
-test/file-to-file.pdf
-test/file to file.pdf
-test/different-passwords.pdf
-test/file-to-file-no-pw.pdf
+test/output/*.pdf
 coverage
