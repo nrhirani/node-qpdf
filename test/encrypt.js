@@ -1,60 +1,41 @@
 const test = require("ava");
 const qpdf = require("../dist").default;
 
-const sample = "test/dummy.pdf";
+const input = "test/example.pdf";
 const password = "1234";
-const options = {
-  password,
-};
 
-// Run this test first, as I need file-to-file.pdf later on.
-test("Should encrypt File -> File", async (t) => {
-  try {
-    await qpdf.encrypt(sample, options, "test/file-to-file.pdf");
-    t.pass();
-  } catch {
-    t.fail();
+test.serial(
+  "Should encrypt a file with user and owner passwords",
+  async (t) => {
+    try {
+      await qpdf.encrypt({
+        input,
+        output: "test/output/different-passwords.pdf",
+        password: { owner: "admin", user: password },
+      });
+      t.pass();
+    } catch (error) {
+      // eslint-disable-next-line ava/assertion-arguments
+      t.fail(error.message);
+    }
   }
-});
+);
 
-test("Should encrypt a file with a space", async (t) => {
-  try {
-    await qpdf.encrypt("test/dummy copy.pdf", options, "test/file to file.pdf");
-    t.pass();
-  } catch {
-    t.fail();
-  }
-});
-
-test("Should encrypt a file with user and owner passwords", async (t) => {
-  try {
-    await qpdf.encrypt(
-      sample,
-      {
-        ...options,
-        password: { owner: "admin", user: "test" },
-      },
-      "test/different-passwords.pdf"
-    );
-    t.pass();
-  } catch {
-    t.fail();
-  }
-});
-
-test("Should encrypt File without a password", async (t) => {
-  try {
-    await qpdf.encrypt(sample, { password: "" }, "test/file-to-file-no-pw.pdf");
-    t.pass();
-  } catch {
-    t.fail();
-  }
+test.serial("should not overwrite existing files", async (t) => {
+  const error = await t.throwsAsync(
+    qpdf.encrypt({
+      input,
+      output: "test/output/different-passwords.pdf",
+      overwrite: false,
+    })
+  );
+  t.is(error.message, "Output file already exists");
 });
 
 test("should allow restrictions", async (t) => {
   try {
-    await qpdf.encrypt(sample, {
-      ...options,
+    await qpdf.encrypt({
+      input,
       restrictions: {
         print: "none",
         useAes: "y",
@@ -67,57 +48,36 @@ test("should allow restrictions", async (t) => {
 });
 
 test("should not work if no input file is specified", async (t) => {
-  try {
-    const results = await qpdf.encrypt("", options);
-    if (results === "Please specify input file") {
-      t.pass();
-    }
-  } catch {
-    t.fail();
-  }
+  const error = await t.throwsAsync(qpdf.encrypt());
+  t.is(error.message, "Please specify input file");
 });
 
 test("should throw an error if the file doesn't exist", async (t) => {
-  try {
-    const results = await qpdf.encrypt("bad_file_name.pdf", options);
-    if (results === "Input file doesn't exist") {
-      t.pass();
-    }
-  } catch {
-    t.fail();
-  }
+  const error = await t.throwsAsync(
+    qpdf.encrypt({
+      input: "bad_file_name.pdf",
+      password,
+    })
+  );
+  t.is(error.message, "Input file doesn't exist");
 });
 
 test("should throw if only user or owner password is submitted", async (t) => {
-  try {
-    const results = await qpdf.encrypt(sample, {
-      ...options,
+  const error = await t.throwsAsync(
+    qpdf.encrypt({
+      input,
       password: { user: "test" },
-    });
-    if (results === "Please specify both owner and user passwords") {
-      t.pass();
-    }
-  } catch {
-    t.fail();
-  }
+    })
+  );
+  t.is(error.message, "Please specify both owner and user passwords");
 });
 
 test("should throw if restrictions are wrong", async (t) => {
-  try {
-    const results = await qpdf.encrypt(sample, {
-      ...options,
+  const error = await t.throwsAsync(
+    qpdf.encrypt({
+      input,
       restrictions: "test",
-    });
-    if (results === "Invalid Restrictions") {
-      t.pass();
-    }
-  } catch {
-    t.fail();
-  }
+    })
+  );
+  t.is(error.message, "Invalid Restrictions");
 });
-
-test.todo("Should encrypt File -> Buffer");
-
-test.todo("Should encrypt a Buffer -> File");
-
-test.todo("Should encrypt a Buffer -> Buffer");
