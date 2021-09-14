@@ -1,6 +1,6 @@
 import { spawn } from "child_process";
 
-export default (callArguments: string[]): Promise<string> => {
+export default (callArguments: string[]): Promise<Buffer> => {
   return new Promise((resolve, reject) => {
     const process = spawn("qpdf", callArguments);
     const stdout: string[] = [];
@@ -11,12 +11,14 @@ export default (callArguments: string[]): Promise<string> => {
     process.stderr.on("data", (data) => {
       stderr.push(data);
     });
-    process.addListener("error", reject);
+    process.on("error", (error) => {
+      reject(error);
+    });
     process.on("close", (code) => {
       if (code !== 0) {
-        reject(stderr.join(","));
+        reject(Buffer.from(stderr.join("")));
       } else {
-        resolve(stdout.join(","));
+        resolve(Buffer.from(stdout.join("")));
       }
     });
   });
