@@ -23,19 +23,48 @@ You can encrypt your PDF by following:
 ```
 import { encrypt } from "node-qpdf2";
 
-const options = {
-    keyLength: 256,
-    password: 'YOUR_PASSWORD_TO_ENCRYPT'
+const pdf = {
+  input: "./test/example.pdf",
+  output: "/tmp/encrypted.pdf",
+  password: "1234",
 }
 
-await encrypt(localFilePath, options, outputFilePath);
+await encrypt(pdf);
 ```
 
 ### Options for Encryption
-The following are **required options**
-* `keyLength:` - a number which defines the encryption algorithm to be used. Values can be **40, 128 and 256** only.
-* `password:` - a string containing the secret password which will be further used to unlock the PDF or an object containing `user` and `owner` for setting password for different roles.
+```
+interface EncryptOptions {
 
+    // This is the location of the unencrypted pdf;
+    input: string;
+
+    // A number which defines the encryption algorithm to be used. Values can be **40, 128 and 256** only. Defaults to 256
+    keyLength?: number;
+
+    // If defined, the file location of the encrypted pdf, if not defined, encrypt() will return a Buffer.
+    output?: string;
+
+    // If defined, will determine if the encrypted pdf will overwrite an existing file. Defaults to True
+    overwrite?: boolean;
+
+    // a string containing the secret password which will be further used to unlock the PDF or an object containing `user` and `owner` for setting password for different roles.
+    password?: string | {
+        owner: string;
+        user: string;
+    };
+
+    // See below
+    restrictions?: {
+        accessibility?: "y" | "n";
+        annotate?: "y" | "n";
+        extract?: "y" | "n";
+        modify?: "y" | "n" | "all" | "annotate" | "form" | "assembly" | "none";
+        print?: "y" | "n" | "full" | "low" | "none";
+        useAes?: "y" | "n";
+    };
+}
+```
 You might want to set other options for each encryption algorithm inside `restrictions:` according to the `keyLength` you choose :-
 
 *Key Length:* **40**
@@ -72,7 +101,9 @@ You might want to set other options for each encryption algorithm inside `restri
 import { encrypt } from "node-qpdf2";
 
 const options = {
+    input: "./test/example.pdf",
     keyLength: 128,
+    output: "/tmp/encrypted.pdf",
     password: 'YOUR_PASSWORD_TO_ENCRYPT',
     restrictions: {
         print: 'low',
@@ -80,25 +111,7 @@ const options = {
     }
 }
 
-await encrypt(inputFilePath, options, outputFilePath);
-```
-or
-```
-import { encrypt } from "node-qpdf2";
-
-const options = {
-  keyLength: 40,
-  password: {
-    user: 'YOUR_PASSWORD_TO_ENCRYPT_FOR_USER',
-    owner: 'YOUR_PASSWORD_TO_ENCRYPT_FOR_OWNER'
-  },
-  restrictions: {
-    print: 'low',
-    useAes: 'y'
-  }
-};
-
-await encrypt(inputFilePath, options, outputFilePath);
+await encrypt(options);
 ```
 
 ## Decryption
@@ -106,7 +119,13 @@ You can decrypt your PDF by following:
 ```
 import { decrypt } from "node-qpdf2";
 
-await decrypt(inputFilePath, 'YOUR_PASSWORD_TO_DECRYPT_PDF', outputFilePath);
+const options = {
+  input: "/tmp/encrypted.pdf",
+  output: "/tmp/decrypted.pdf",
+  password: "YOUR_PASSWORD_TO_DECRYPT_PDF",
+}
+
+await decrypt(options);
 ```
 
 ## Meta
