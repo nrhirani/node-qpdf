@@ -107,8 +107,8 @@ test.serial("Should decrypt a File -> Buffer", async (t) => {
   }
 });
 
+// Not sure this can happen: https://github.com/qpdf/qpdf/issues/54
 test.todo("Should encrypt a Buffer -> File");
 test.todo("Should decrypt a Buffer -> File");
-
 test.todo("Should encrypt a Buffer -> Buffer");
 test.todo("Should decrypt a Buffer -> Buffer");
