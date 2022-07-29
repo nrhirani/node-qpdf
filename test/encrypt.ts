@@ -1,5 +1,5 @@
-const test = require("ava");
-const qpdf = require("../dist").default;
+import test from "ava";
+import qpdf from "../src";
 
 const input = "test/example.pdf";
 const password = "1234";
@@ -14,8 +14,8 @@ test.serial(
         password: { owner: "admin", user: password },
       });
       t.pass();
-    } catch (error) {
-      // eslint-disable-next-line ava/assertion-arguments
+    } catch (error: any) {
+      // eslint-disable-next-line ava/assertion-arguments, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
       t.fail(error.message);
     }
   }
@@ -29,7 +29,7 @@ test.serial("should not overwrite existing files", async (t) => {
       overwrite: false,
     })
   );
-  t.is(error.message, "Output file already exists");
+  t.is(error?.message, "Output file already exists");
 });
 
 test("should allow restrictions", async (t) => {
@@ -48,8 +48,9 @@ test("should allow restrictions", async (t) => {
 });
 
 test("should not work if no input file is specified", async (t) => {
+  // @ts-expect-error This is what I'm testing
   const error = await t.throwsAsync(qpdf.encrypt());
-  t.is(error.message, "Please specify input file");
+  t.is(error?.message, "Please specify input file");
 });
 
 test("should throw an error if the file doesn't exist", async (t) => {
@@ -59,25 +60,27 @@ test("should throw an error if the file doesn't exist", async (t) => {
       password,
     })
   );
-  t.is(error.message, "Input file doesn't exist");
+  t.is(error?.message, "Input file doesn't exist");
 });
 
 test("should throw if only user or owner password is submitted", async (t) => {
   const error = await t.throwsAsync(
     qpdf.encrypt({
       input,
+      // @ts-expect-error This is what I'm testing
       password: { user: "test" },
     })
   );
-  t.is(error.message, "Please specify both owner and user passwords");
+  t.is(error?.message, "Please specify both owner and user passwords");
 });
 
 test("should throw if restrictions are wrong", async (t) => {
   const error = await t.throwsAsync(
     qpdf.encrypt({
       input,
+      // @ts-expect-error This is what I'm testing
       restrictions: "test",
     })
   );
-  t.is(error.message, "Invalid Restrictions");
+  t.is(error?.message, "Invalid Restrictions");
 });

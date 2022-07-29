@@ -6,9 +6,11 @@ export default (callArguments: string[]): Promise<Buffer> => {
     const stdout: string[] = [];
     const stderr: string[] = [];
     process.stdout.on("data", (data) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       stdout.push(data);
     });
     process.stderr.on("data", (data) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       stderr.push(data);
     });
     process.on("error", (error) => {

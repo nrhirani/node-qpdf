@@ -128,6 +128,18 @@ const options = {
 await decrypt(options);
 ```
 
+## Coverage
+------------|---------|----------|---------|---------|-------------------
+File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
+------------|---------|----------|---------|---------|-------------------
+All files   |   97.56 |     97.5 |     100 |   97.56 |
+ decrypt.ts |     100 |      100 |     100 |     100 |
+ encrypt.ts |     100 |      100 |     100 |     100 |
+ index.ts   |     100 |      100 |     100 |     100 |
+ spawn.ts   |   85.18 |       80 |     100 |   85.18 | 13-14,17,21
+ utils.ts   |     100 |      100 |     100 |     100 |
+------------|---------|----------|---------|---------|-------------------
+
 ## Meta
 
 Maintained by [Kyle McNally](http://www.github.com/Sparticuz)

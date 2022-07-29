@@ -1,40 +1,11 @@
 {
+  "extends": "@tsconfig/node14/tsconfig.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "removeComments": true,                /* Do not emit comments to output. */
-    "strict": true,                        /* Enable all strict type-checking options. */
-    "noImplicitAny": true,                 /* Raise error on expressions and declarations with an implied 'any' type. */
-    "strictNullChecks": true,              /* Enable strict null checks. */
-    "noImplicitThis": true,                /* Raise error on 'this' expressions with an implied 'any' type. */
-    "alwaysStrict": true,                  /* Parse in strict mode and emit "use strict" for each source file. */
-    "noUnusedLocals": true,                /* Report errors on unused locals. */
-    "allowUnusedLabels": false,
-    "noUnusedParameters": true,            /* Report errors on unused parameters. */
-    "noImplicitReturns": true,             /* Report error when not all code paths in function return a value. */
-    "noFallthroughCasesInSwitch": true,    /* Report errors for fallthrough cases in switch statement. */
-    "moduleResolution": "node",            /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
-    "esModuleInterop": true,               /* Enables emit interoperability between CommonJS and ES Modules via creation of namespace objects for all imports. Implies 'allowSyntheticDefaultImports'. */
-    "inlineSourceMap": false,              /* Emit a single file with source maps instead of having a separate file. */
-    "experimentalDecorators": true,
-    "pretty": true,
-    "allowUnreachableCode": false,
-    "forceConsistentCasingInFileNames": true,
-    "allowSyntheticDefaultImports": true,
-    "strictBindCallApply": true,
-    "downlevelIteration": true,
-    "strictFunctionTypes": true,
-    "strictPropertyInitialization": true,
-    "target": "es2019",
-    "outDir": "dist",
-    "rootDir": "src",
     "declaration": true,
-    "typeRoots": [
-      "./types",
-      "./node_modules/@types"
-    ]
+    "outDir": "dist",
   },
-  "exclude": [
-    "node_modules",
-    "dist"
+  "include": [
+    "src",
+    "test"
   ]
 }

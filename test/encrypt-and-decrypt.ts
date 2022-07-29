@@ -1,7 +1,5 @@
-// All error.messages ARE strings //
-/* eslint-disable ava/assertion-arguments */
-const test = require("ava");
-const qpdf = require("../dist").default;
+import test from "ava";
+import qpdf from "../src";
 
 const input = "test/example.pdf";
 
@@ -13,8 +11,9 @@ test.serial("Should encrypt a file with a space", async (t) => {
       password: "1234",
     });
     t.pass();
-  } catch (error) {
-    t.fail(error.message);
+  } catch (error: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, ava/assertion-arguments
+    t.fail(error.message as string);
   }
 });
 
@@ -25,8 +24,9 @@ test.serial("Should decrypt a file with a space", async (t) => {
       password: "1234",
     });
     t.pass();
-  } catch (error) {
-    t.fail(error.message);
+  } catch (error: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, ava/assertion-arguments
+    t.fail(error.message as string);
   }
 });
 
@@ -37,8 +37,9 @@ test.serial("Should encrypt a File without a password", async (t) => {
       output: "test/output/file-to-file-no-pw.pdf",
     });
     t.pass();
-  } catch (error) {
-    t.fail(error.message);
+  } catch (error: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, ava/assertion-arguments
+    t.fail(error.message as string);
   }
 });
 
@@ -49,8 +50,9 @@ test.serial("Should decrypt a File without a password", async (t) => {
       output: "test/output/file-to-file-no-pw-decrypted.pdf",
     });
     t.pass();
-  } catch (error) {
-    t.fail(error.message);
+  } catch (error: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, ava/assertion-arguments
+    t.fail(error.message as string);
   }
 });
 
@@ -64,8 +66,9 @@ test.serial("Should encrypt to a file", async (t) => {
       password: "1234",
     });
     t.pass();
-  } catch (error) {
-    t.fail(error.message);
+  } catch (error: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, ava/assertion-arguments
+    t.fail(error.message as string);
   }
 });
 
@@ -78,8 +81,9 @@ test.serial("Should decrypt from a file", async (t) => {
       password: "1234",
     });
     t.pass();
-  } catch (error) {
-    t.fail(error.message);
+  } catch (error: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, ava/assertion-arguments
+    t.fail(error.message as string);
   }
 });
 
@@ -90,8 +94,9 @@ test.serial("Should encrypt File -> Buffer", async (t) => {
       password: "1234",
     });
     t.true(Buffer.isBuffer(BufferFromFile));
-  } catch (error) {
-    t.fail(error.message);
+  } catch (error: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, ava/assertion-arguments
+    t.fail(error.message as string);
   }
 });
 
@@ -102,8 +107,9 @@ test.serial("Should decrypt a File -> Buffer", async (t) => {
       password: "1234",
     });
     t.true(Buffer.isBuffer(BufferFromFile));
-  } catch (error) {
-    t.fail(error.message);
+  } catch (error: any) {
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access, ava/assertion-arguments
+    t.fail(error.message as string);
   }
 });
 

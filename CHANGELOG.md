@@ -1,3 +1,6 @@
+Newer?
+==
+- Check out Github releases for What's changed
 1.3.1
 ==
 - Update deps, Fixes CVE https://github.com/Sparticuz/node-qpdf2/pull/3
