@@ -8,7 +8,7 @@ const EncryptDefaults = {
 
 export interface EncryptOptions {
   input: string;
-  keyLength?: number;
+  keyLength?: 40 | 128 | 256;
   output?: string;
   overwrite?: boolean | undefined;
   password?:
