@@ -44,9 +44,7 @@ export const encrypt = async (userPayload: EncryptOptions): Promise<Buffer> => {
   if (typeof payload.password === "object") {
     if (
       payload.password.user === undefined ||
-      payload.password.user === null ||
-      payload.password.owner === undefined ||
-      payload.password.owner === null
+      payload.password.owner === undefined
     ) {
       throw new Error("Please specify both owner and user passwords");
     }
@@ -56,7 +54,7 @@ export const encrypt = async (userPayload: EncryptOptions): Promise<Buffer> => {
     callArguments.push(payload.password, payload.password);
   } else {
     // no password specified, push two empty strings (https://stackoverflow.com/a/43736897/455124)
-    callArguments.push('""', '""');
+    callArguments.push("", "");
   }
 
   // Specifying the key length

@@ -16,8 +16,6 @@ export const decrypt = async (payload: DecryptSettings): Promise<Buffer> => {
   // Password
   if (payload.password) {
     callArguments.push(`--password=${payload.password}`);
-  } else {
-    callArguments.push('--password=""');
   }
 
   // Input file path
