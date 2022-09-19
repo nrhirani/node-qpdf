@@ -1,3 +1,5 @@
+// Ignore errors about unsafe-arguments, this is because data is unknown
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { spawn } from "child_process";
 
 export default (callArguments: string[]): Promise<Buffer> => {
@@ -6,14 +8,14 @@ export default (callArguments: string[]): Promise<Buffer> => {
     const stdout: string[] = [];
     const stderr: string[] = [];
     process.stdout.on("data", (data) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
       stdout.push(data);
     });
     process.stderr.on("data", (data) => {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+      /* c8 ignore next */
       stderr.push(data);
     });
     process.on("error", (error) => {
+      /* c8 ignore next */
       reject(error);
     });
     process.on("close", (code) => {
