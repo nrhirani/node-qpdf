@@ -7,7 +7,7 @@ export interface DecryptSettings {
   password?: string;
 }
 
-export default async (payload: DecryptSettings): Promise<Buffer> => {
+export const decrypt = async (payload: DecryptSettings): Promise<Buffer> => {
   if (!payload.input) throw new Error("Please specify input file");
   if (!fileExists(payload.input)) throw new Error("Input file doesn't exist");
 

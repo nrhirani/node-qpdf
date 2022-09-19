@@ -1,7 +1,4 @@
-import decrypt from "./decrypt";
-import encrypt from "./encrypt";
-
-export default {
-  decrypt,
-  encrypt,
-};
+export type { DecryptSettings } from "./decrypt";
+export { decrypt } from "./decrypt";
+export type { EncryptOptions } from "./encrypt";
+export { encrypt } from "./encrypt";

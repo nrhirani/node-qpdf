@@ -5,6 +5,7 @@ const EncryptDefaults = {
   keyLength: 256,
   overwrite: true,
 };
+
 export interface EncryptOptions {
   input: string;
   keyLength?: number;
@@ -27,7 +28,7 @@ export interface EncryptOptions {
 }
 
 // eslint-disable-next-line sonarjs/cognitive-complexity
-export default async (userPayload: EncryptOptions): Promise<Buffer> => {
+export const encrypt = async (userPayload: EncryptOptions): Promise<Buffer> => {
   // Set Defaults
   const payload = { ...EncryptDefaults, ...userPayload };
 
