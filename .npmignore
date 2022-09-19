@@ -1,9 +1,13 @@
 .eslintcache
 test/**
-.nyc_output/**
+coverage
 .vscode/**
 src/**
 .editorconfig
 .eslintrc.json
 tsconfig.json
 .github/**
+.eslintrc.js
+CHANGELOG.md
+tsconfig.build.json
+README.md
