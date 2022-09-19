@@ -46,7 +46,7 @@ export interface EncryptOptions {
      * NOT SUPPORTED
      * Please see: https://qpdf.readthedocs.io/en/stable/cli.html#option-cleartext-metadata
      */
-    cleartextMetaData?: boolean;
+    cleartextMetadata?: boolean;
     /** Please see: https://qpdf.readthedocs.io/en/stable/cli.html#option-extract */
     extract?: "y" | "n";
     /** Please see: https://qpdf.readthedocs.io/en/stable/cli.html#option-form */
