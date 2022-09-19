@@ -1,11 +1,13 @@
 # node-qpdf2
 
-![Node.js CI](https://github.com/Sparticuz/node-qpdf2/workflows/Node.js%20CI/badge.svg)
-![CodeQL](https://github.com/Sparticuz/node-qpdf2/workflows/Code%20scanning%20-%20action/badge.svg)
-![npm](https://img.shields.io/npm/v/node-qpdf2)
-![npm](https://img.shields.io/npm/dt/node-qpdf2)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/Sparticuz/node-qpdf2/commits/master)
+[![Node.js CI](https://github.com/Sparticuz/node-qpdf2/actions/workflows/node.js.yml/badge.svg)](https://github.com/Sparticuz/node-qpdf2/actions/workflows/node.js.yml)
+[![CodeQL](https://github.com/Sparticuz/node-qpdf2/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Sparticuz/node-qpdf2/actions/workflows/codeql-analysis.yml)
+[![npm](https://img.shields.io/npm/v/node-qpdf2)](https://www.npmjs.com/package/node-qpdf2)
+[![npm](https://img.shields.io/npm/dm/node-qpdf)](https://www.npmjs.com/package/node-qpdf2)
+[![qpdf](https://img.shields.io/badge/dependencies-qpdf-green)](https://github.com/qpdf/qpdf)
 
-A very simple wrapper for [qpdf](https://github.com/qpdf/qpdf) which is a content-preserving transformations on PDF files. It includes encrypting and decrypting PDF with AES 256, AES 128, RC4 (128 & 40) encryption algorithms. This is a fork of [nrhirani/node-qpdf](https://github.com/nrhirani/node-qpdf), adding Promises and Types.
+A very simple wrapper for [qpdf](https://github.com/qpdf/qpdf) which is performs content-preserving transformations on PDF files. It includes encrypting and decrypting PDF files with AES 256, AES 128, RC4 (128 & 40) encryption algorithms. This is a fork of [nrhirani/node-qpdf](https://github.com/nrhirani/node-qpdf), adding Promises and Types, and is kept mostly up to date with `qpdf`.
 
 ## Dependencies
 * [qpdf](https://github.com/qpdf/qpdf)
@@ -17,6 +19,9 @@ A very simple wrapper for [qpdf](https://github.com/qpdf/qpdf) which is a conten
     ```
     npm install node-qpdf2
     ```
+
+## Serverless?
+This package can be uses on serverless platforms by using your vendor's layers functionality. Use the zip release from `qpdf` as the layer. For example, `qpdf-11.1.0-bin-linux-x86_64.zip` can be directly uploaded as a layer, and has been tested using Amazon Lambda.
 
 ## Encryption
 You can encrypt your PDF by following:
@@ -68,26 +73,28 @@ const options = {
 await decrypt(options);
 ```
 
+## CJS
+If you use CJS, you'll need to specify the function you want to require.
+```
+const decrypt = require("node-qpdf").decrypt;
+```
+
 ## Coverage
-------------|---------|----------|---------|---------|-------------------
 File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ------------|---------|----------|---------|---------|-------------------
-All files   |   97.56 |     97.5 |     100 |   97.56 |
+All files   |     100 |      100 |     100 |     100 |
  decrypt.ts |     100 |      100 |     100 |     100 |
  encrypt.ts |     100 |      100 |     100 |     100 |
  index.ts   |     100 |      100 |     100 |     100 |
- spawn.ts   |   85.18 |       80 |     100 |   85.18 | 13-14,17,21
+ spawn.ts   |     100 |      100 |     100 |     100 |
  utils.ts   |     100 |      100 |     100 |     100 |
-------------|---------|----------|---------|---------|-------------------
-
-## Meta
-
-Maintained by [Kyle McNally](http://www.github.com/Sparticuz)
-
 
 ## Contributing
+Maintained by [Kyle McNally](http://www.github.com/Sparticuz).
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/Sparticuz/node-qpdf2.
+
+[Sponsorship](https://github.com/sponsors/Sparticuz) is also welcome
 
 
 ## License
