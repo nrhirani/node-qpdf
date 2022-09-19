@@ -76,9 +76,9 @@ export const encrypt = async (userPayload: EncryptOptions): Promise<Buffer> => {
 
   const callArguments = [];
 
-  // TODO: If the keyLength is 40, `--allow-weak-crypto` needs to be specified before `--encrypt`.
+  // If the keyLength is 40, `--allow-weak-crypto` needs to be specified before `--encrypt`.
   // This is required for qpdf 11+.
-  // if (payload.keyLength === 40) callArguments.push("--allow-weak-crypto");
+  if (payload.keyLength === 40) callArguments.push("--allow-weak-crypto");
 
   callArguments.push("--encrypt");
 

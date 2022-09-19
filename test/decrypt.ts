@@ -31,7 +31,7 @@ test("Should throw with a bad password", async (t) => {
     });
     t.fail("This method should fail!");
   } catch (error) {
-    t.is(error, "test/encrypted.pdf: invalid password\n");
+    t.is(error, "qpdf: test/encrypted.pdf: invalid password\n");
   }
 });
 

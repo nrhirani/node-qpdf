@@ -5,12 +5,13 @@
 [![CodeQL](https://github.com/Sparticuz/node-qpdf2/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/Sparticuz/node-qpdf2/actions/workflows/codeql-analysis.yml)
 [![npm](https://img.shields.io/npm/v/node-qpdf2)](https://www.npmjs.com/package/node-qpdf2)
 [![npm](https://img.shields.io/npm/dm/node-qpdf)](https://www.npmjs.com/package/node-qpdf2)
-[![qpdf](https://img.shields.io/badge/dependencies-qpdf-green)](https://github.com/qpdf/qpdf)
+[![qpdf 11+](https://img.shields.io/badge/dependencies-qpdf-green)](https://github.com/qpdf/qpdf)
 
 A very simple wrapper for [qpdf](https://github.com/qpdf/qpdf) which is performs content-preserving transformations on PDF files. It includes encrypting and decrypting PDF files with AES 256, AES 128, RC4 (128 & 40) encryption algorithms. This is a fork of [nrhirani/node-qpdf](https://github.com/nrhirani/node-qpdf), adding Promises and Types, and is kept mostly up to date with `qpdf`.
 
 ## Dependencies
 * [qpdf](https://github.com/qpdf/qpdf)
+  * Version 11 is the minimum version for node-qpdf2 4.0+
 
 ## Installation
 1. Install qpdf:
