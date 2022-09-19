@@ -38,7 +38,13 @@ export const encrypt = async (userPayload: EncryptOptions): Promise<Buffer> => {
   if (payload.output && !payload.overwrite && fileExists(payload.output))
     throw new Error("Output file already exists");
 
-  const callArguments = ["--encrypt"];
+  const callArguments = [];
+
+  // TODO: If the keyLength is 40, `--allow-weak-crypto` needs to be specified before `--encrypt`.
+  // This is required for qpdf 11+.
+  // if (payload.keyLength === 40) callArguments.push("--allow-weak-crypto");
+
+  callArguments.push("--encrypt");
 
   // Set user-password and owner-password
   if (typeof payload.password === "object") {
@@ -46,6 +52,7 @@ export const encrypt = async (userPayload: EncryptOptions): Promise<Buffer> => {
       payload.password.user === undefined ||
       payload.password.owner === undefined
     ) {
+      // TODO: If the keyLength is 256 AND there is no owner password, `--allow-insecure` can be used
       throw new Error("Please specify both owner and user passwords");
     }
     callArguments.push(payload.password.user, payload.password.owner);

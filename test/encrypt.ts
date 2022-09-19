@@ -51,6 +51,17 @@ test("should encrypt without passwords", async (t) => {
   });
 });
 
+test("should encrypt where keyLength is 40", async (t) => {
+  await t.notThrowsAsync(async () => {
+    await encrypt({
+      input,
+      keyLength: 40,
+      output: "test/output/encrypted-with-keyLength-40.pdf",
+      password,
+    });
+  });
+});
+
 test("should not work if no input file is specified", async (t) => {
   // @ts-expect-error This is what I'm testing
   const error = await t.throwsAsync(encrypt());
