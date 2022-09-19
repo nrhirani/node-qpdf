@@ -41,6 +41,12 @@ export interface EncryptOptions {
     annotate?: "y" | "n";
     /** Please see: https://qpdf.readthedocs.io/en/stable/cli.html#option-assemble */
     assemble?: "y" | "n";
+    /**
+     * Cleartext Metadata
+     * NOT SUPPORTED
+     * Please see: https://qpdf.readthedocs.io/en/stable/cli.html#option-cleartext-metadata
+     */
+    cleartextMetaData?: boolean;
     /** Please see: https://qpdf.readthedocs.io/en/stable/cli.html#option-extract */
     extract?: "y" | "n";
     /** Please see: https://qpdf.readthedocs.io/en/stable/cli.html#option-form */
