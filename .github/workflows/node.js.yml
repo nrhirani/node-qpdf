@@ -21,8 +21,8 @@ jobs:
     steps:
     - name: Install QPDF
       run: |
-        sudo apt-get install curl unzip -y \
-        curl https://github.com/qpdf/qpdf/releases/download/v11.1.0/qpdf-11.1.0-bin-linux-x86_64.zip -o /tmp/qpdf.zip \
+        sudo apt-get install wget unzip -y
+        wget -O /tmp/qpdf.zip https://github.com/qpdf/qpdf/releases/download/v11.1.0/qpdf-11.1.0-bin-linux-x86_64.zip
         sudo unzip -d / /tmp/qpdf.zip
     - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
