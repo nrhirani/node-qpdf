@@ -41,11 +41,7 @@ export interface EncryptOptions {
     annotate?: "y" | "n";
     /** Please see: https://qpdf.readthedocs.io/en/stable/cli.html#option-assemble */
     assemble?: "y" | "n";
-    /**
-     * Cleartext Metadata
-     * NOT SUPPORTED
-     * Please see: https://qpdf.readthedocs.io/en/stable/cli.html#option-cleartext-metadata
-     */
+    /** Please see: https://qpdf.readthedocs.io/en/stable/cli.html#option-cleartext-metadata */
     cleartextMetadata?: boolean;
     /** Please see: https://qpdf.readthedocs.io/en/stable/cli.html#option-extract */
     extract?: "y" | "n";
@@ -112,6 +108,11 @@ export const encrypt = async (userPayload: EncryptOptions): Promise<Buffer> => {
     if (typeof payload.restrictions !== "object")
       throw new Error("Invalid Restrictions");
     for (const [restriction, value] of Object.entries(payload.restrictions)) {
+      // cleartextMetadata does not have a value
+      if (restriction === "cleartextMetadata" && value === true) {
+        callArguments.push(`--${hyphenate(restriction)}`);
+      }
+
       if (restriction === "useAes" && payload.keyLength === 256) {
         // use-aes is always on with 256 bit keyLength
       } else {
