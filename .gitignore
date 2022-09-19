@@ -1,5 +1,5 @@
 node_modules
 dist/**
 .eslintcache
-test/output/*.pdf
+test/output
 coverage

@@ -1,5 +1,5 @@
 import test from "ava";
-import qpdf from "../src";
+import { encrypt } from "../src/encrypt";
 
 const input = "test/example.pdf";
 const password = "1234";
@@ -7,25 +7,21 @@ const password = "1234";
 test.serial(
   "Should encrypt a file with user and owner passwords",
   async (t) => {
-    try {
-      await qpdf.encrypt({
+    await t.notThrowsAsync(async () => {
+      await encrypt({
         input,
-        output: "test/output/different-passwords.pdf",
+        output: "test/output/encrypted-with-different-passwords.pdf",
         password: { owner: "admin", user: password },
       });
-      t.pass();
-    } catch (error: any) {
-      // eslint-disable-next-line ava/assertion-arguments, @typescript-eslint/no-unsafe-argument, @typescript-eslint/no-unsafe-member-access
-      t.fail(error.message);
-    }
+    });
   }
 );
 
 test.serial("should not overwrite existing files", async (t) => {
   const error = await t.throwsAsync(
-    qpdf.encrypt({
+    encrypt({
       input,
-      output: "test/output/different-passwords.pdf",
+      output: "test/output/encrypted-with-different-passwords.pdf",
       overwrite: false,
     })
   );
@@ -33,29 +29,61 @@ test.serial("should not overwrite existing files", async (t) => {
 });
 
 test("should allow restrictions", async (t) => {
-  try {
-    await qpdf.encrypt({
+  await t.notThrowsAsync(async () => {
+    await encrypt({
       input,
+      output: "test/output/encrypted-with-restrictions.pdf",
+      password,
       restrictions: {
         print: "none",
         useAes: "y",
       },
     });
-    t.pass();
-  } catch {
-    t.fail();
-  }
+  });
+});
+
+test("should encrypt without passwords", async (t) => {
+  await t.notThrowsAsync(async () => {
+    await encrypt({
+      input,
+      output: "test/output/encrypted-with-no-password.pdf",
+    });
+  });
+});
+
+test("should encrypt where keyLength is 40", async (t) => {
+  await t.notThrowsAsync(async () => {
+    await encrypt({
+      input,
+      keyLength: 40,
+      output: "test/output/encrypted-with-keyLength-40.pdf",
+      password,
+    });
+  });
+});
+
+test("should encrypt where cleartextMetadata is set as a restriction", async (t) => {
+  await t.notThrowsAsync(async () => {
+    await encrypt({
+      input,
+      output: "test/output/encrypted-with-cleartext-metadata.pdf",
+      password,
+      restrictions: {
+        cleartextMetadata: true,
+      },
+    });
+  });
 });
 
 test("should not work if no input file is specified", async (t) => {
   // @ts-expect-error This is what I'm testing
-  const error = await t.throwsAsync(qpdf.encrypt());
+  const error = await t.throwsAsync(encrypt());
   t.is(error?.message, "Please specify input file");
 });
 
 test("should throw an error if the file doesn't exist", async (t) => {
   const error = await t.throwsAsync(
-    qpdf.encrypt({
+    encrypt({
       input: "bad_file_name.pdf",
       password,
     })
@@ -65,7 +93,7 @@ test("should throw an error if the file doesn't exist", async (t) => {
 
 test("should throw if only user or owner password is submitted", async (t) => {
   const error = await t.throwsAsync(
-    qpdf.encrypt({
+    encrypt({
       input,
       // @ts-expect-error This is what I'm testing
       password: { user: "test" },
@@ -76,7 +104,7 @@ test("should throw if only user or owner password is submitted", async (t) => {
 
 test("should throw if restrictions are wrong", async (t) => {
   const error = await t.throwsAsync(
-    qpdf.encrypt({
+    encrypt({
       input,
       // @ts-expect-error This is what I'm testing
       restrictions: "test",
