@@ -62,6 +62,19 @@ test("should encrypt where keyLength is 40", async (t) => {
   });
 });
 
+test("should encrypt where cleartextMetadata is set as a restriction", async (t) => {
+  await t.notThrowsAsync(async () => {
+    await encrypt({
+      input,
+      output: "test/output/encrypted-with-cleartext-metadata.pdf",
+      password,
+      restrictions: {
+        cleartextMetadata: true,
+      },
+    });
+  });
+});
+
 test("should not work if no input file is specified", async (t) => {
   // @ts-expect-error This is what I'm testing
   const error = await t.throwsAsync(encrypt());
