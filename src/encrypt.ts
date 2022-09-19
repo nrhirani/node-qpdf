@@ -20,8 +20,11 @@ export interface EncryptOptions {
   restrictions?: {
     accessibility?: "y" | "n";
     annotate?: "y" | "n";
+    assemble?: "y" | "n";
     extract?: "y" | "n";
+    form?: "y" | "n";
     modify?: "y" | "n" | "all" | "annotate" | "form" | "assembly" | "none";
+    modifyOther?: "y" | "n";
     print?: "y" | "n" | "full" | "low" | "none";
     useAes?: "y" | "n";
   };
