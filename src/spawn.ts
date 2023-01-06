@@ -1,6 +1,6 @@
 // Ignore errors about unsafe-arguments, this is because data is unknown
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
-import { spawn } from "child_process";
+import { spawn } from "node:child_process";
 
 export default (callArguments: string[]): Promise<Buffer> => {
   return new Promise((resolve, reject) => {
