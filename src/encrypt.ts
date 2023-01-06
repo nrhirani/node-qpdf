@@ -125,7 +125,12 @@ export const encrypt = async (userPayload: EncryptOptions): Promise<Buffer> => {
   callArguments.push("--", payload.input);
 
   if (payload.output) {
-    callArguments.push(payload.output);
+    // If the input and output locations are the same, and overwrite is true, replace the input file
+    if (payload.input === payload.output && payload.overwrite) {
+      callArguments.push("--replace-input");
+    } else {
+      callArguments.push(payload.output);
+    }
   } else {
     // Print PDF on stdout
     callArguments.push("-");
