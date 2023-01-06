@@ -1,4 +1,4 @@
-import { existsSync } from "fs";
+import { existsSync } from "node:fs";
 
 /**
  * hyphenate will take any value that is dromedary case (camelCase with a initial lowercase letter)

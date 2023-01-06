@@ -1,4 +1,5 @@
 import test from "ava";
+import { copyFile } from "node:fs/promises";
 import { encrypt } from "../src/encrypt";
 
 const input = "test/example.pdf";
@@ -111,4 +112,18 @@ test("should throw if restrictions are wrong", async (t) => {
     })
   );
   t.is(error?.message, "Invalid Restrictions");
+});
+
+test("Should encrypt and overwrite the file", async (t) => {
+  await t.notThrowsAsync(async () => {
+    // First, copy example.pdf to output/overwrite.pdf
+    // eslint-disable-next-line sonarjs/no-duplicate-string
+    await copyFile("test/example.pdf", "test/output/overwrite.pdf");
+    await encrypt({
+      input: "test/output/overwrite.pdf",
+      output: "test/output/overwrite.pdf",
+      overwrite: true,
+      password: "1234",
+    });
+  });
 });
