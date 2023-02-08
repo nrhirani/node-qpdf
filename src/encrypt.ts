@@ -1,5 +1,5 @@
-import execute from "./spawn";
-import { fileExists, hyphenate } from "./utils";
+import execute from "./spawn.js";
+import { fileExists, hyphenate } from "./utils.js";
 
 const EncryptDefaults = {
   keyLength: 256,

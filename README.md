@@ -74,12 +74,6 @@ const options = {
 await decrypt(options);
 ```
 
-## CJS
-If you use CJS, you'll need to specify the function you want to require.
-```
-const decrypt = require("node-qpdf").decrypt;
-```
-
 ## Coverage
 File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
 ------------|---------|----------|---------|---------|-------------------

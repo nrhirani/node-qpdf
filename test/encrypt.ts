@@ -1,6 +1,6 @@
 import test from "ava";
 import { copyFile } from "node:fs/promises";
-import { encrypt } from "../src/encrypt";
+import { encrypt } from "../src/encrypt.js";
 
 const input = "test/example.pdf";
 const password = "1234";
