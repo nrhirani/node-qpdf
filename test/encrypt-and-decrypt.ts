@@ -1,5 +1,5 @@
 import test from "ava";
-import { encrypt, decrypt } from "../src";
+import { encrypt, decrypt } from "../src/index.js";
 
 const input = "test/example.pdf";
 
