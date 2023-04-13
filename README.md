@@ -10,22 +10,27 @@
 A very simple wrapper for [qpdf](https://github.com/qpdf/qpdf) which is performs content-preserving transformations on PDF files. It includes encrypting and decrypting PDF files with AES 256, AES 128, RC4 (128 & 40) encryption algorithms. This is a fork of [nrhirani/node-qpdf](https://github.com/nrhirani/node-qpdf), adding Promises and Types, and is kept mostly up to date with `qpdf`.
 
 ## Dependencies
-* [qpdf](https://github.com/qpdf/qpdf)
-  * Version 11 is the minimum version for node-qpdf2 4.0+
+
+- [qpdf](https://github.com/qpdf/qpdf)
+  - Version 11 is the minimum version for node-qpdf2 4.0+
 
 ## Installation
+
 1. Install qpdf:
-    * Download [qpdf](https://github.com/qpdf/qpdf/releases)
+   - Download [qpdf](https://github.com/qpdf/qpdf/releases)
 2. Install node-qpdf:
-    ```
-    npm install node-qpdf2
-    ```
+   ```
+   npm install node-qpdf2
+   ```
 
 ## Serverless?
+
 This package can be uses on serverless platforms by using your vendor's layers functionality. Use the zip release from `qpdf` as the layer. For example, `qpdf-11.1.0-bin-linux-x86_64.zip` can be directly uploaded as a layer, and has been tested using Amazon Lambda.
 
 ## Encryption
+
 You can encrypt your PDF by following:
+
 ```
 import { encrypt } from "node-qpdf2";
 
@@ -39,10 +44,13 @@ await encrypt(pdf);
 ```
 
 ### Options for Encryption
+
 Please see [src/encrypt.ts](https://github.com/Sparticuz/node-qpdf2/blob/master/src/encrypt.ts#L9) for the latest options, as well as [QPDF's documentation](https://qpdf.readthedocs.io/en/stable/cli.html#encryption) for information on what each restriction does.
 
 ### Examples
+
 #### Render and Save:
+
 ```
 import { encrypt } from "node-qpdf2";
 
@@ -61,7 +69,9 @@ await encrypt(options);
 ```
 
 ## Decryption
+
 You can decrypt your PDF by following:
+
 ```
 import { decrypt } from "node-qpdf2";
 
@@ -85,12 +95,12 @@ All files   |     100 |      100 |     100 |     100 |
  utils.ts   |     100 |      100 |     100 |     100 |
 
 ## Contributing
+
 Maintained by [Kyle McNally](http://www.github.com/Sparticuz).
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/Sparticuz/node-qpdf2.
 
 [Sponsorship](https://github.com/sponsors/Sparticuz) is also welcome
-
 
 ## License
 
