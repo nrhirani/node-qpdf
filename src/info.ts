@@ -13,7 +13,7 @@ export interface InfoSettings {
  * @param payload The settings for info
  * @returns The output of QPDF
  */
-export const info = async (payload: InfoSettings): Promise<Buffer> => {
+export const info = async (payload: InfoSettings): Promise<string> => {
   if (!payload.input) throw new Error("Please specify input file");
   if (!fileExists(payload.input)) throw new Error("Input file doesn't exist");
 
@@ -27,5 +27,7 @@ export const info = async (payload: InfoSettings): Promise<Buffer> => {
   // Input file path
   callArguments.push(payload.input);
 
-  return execute(callArguments);
+  const result = await execute(callArguments);
+
+  return result.toLocaleString().trim();
 };

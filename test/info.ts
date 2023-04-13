@@ -12,3 +12,18 @@ test("Should not work if the input file doesn't exist", async (t) => {
   t.is(error?.message, "Input file doesn't exist");
 });
 
+test("Should return the info for an encrypted file", async (t) => {
+  await t.notThrowsAsync(async () => {
+    await info({
+      input: "test/encrypted.pdf",
+      password: "1234",
+    });
+  });
+});
+
+test("Should return the info for a non-encrypted file", async (t) => {
+  const result = await info({
+    input: "test/example.pdf",
+  });
+  t.is(result, "File is not encrypted");
+});
