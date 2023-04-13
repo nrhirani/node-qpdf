@@ -84,15 +84,34 @@ const options = {
 await decrypt(options);
 ```
 
+## PDF Encryption info
+
+You can retrieve encryption information using the info function. This function will return a Promise<string>. See [here](https://qpdf.readthedocs.io/en/stable/cli.html#option-show-encryption) for more information.
+
+```
+import { info } from "node-qpdf2";
+
+const options = {
+  input: "/tmp/encrypted.pdf",
+  password: "FILE_PASSWORD",
+}
+
+console.log(await info(options));
+```
+
+If the file is not encrypted, the result will be "File is not encrypted".
+
 ## Coverage
-File        | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s
-------------|---------|----------|---------|---------|-------------------
-All files   |     100 |      100 |     100 |     100 |
- decrypt.ts |     100 |      100 |     100 |     100 |
- encrypt.ts |     100 |      100 |     100 |     100 |
- index.ts   |     100 |      100 |     100 |     100 |
- spawn.ts   |     100 |      100 |     100 |     100 |
- utils.ts   |     100 |      100 |     100 |     100 |
+
+| File       | % Stmts | % Branch | % Funcs | % Lines | Uncovered Line #s |
+| ---------- | ------- | -------- | ------- | ------- | ----------------- |
+| All files  | 100     | 100      | 100     | 100     |
+| decrypt.ts | 100     | 100      | 100     | 100     |
+| encrypt.ts | 100     | 100      | 100     | 100     |
+| index.ts   | 100     | 100      | 100     | 100     |
+| info.ts    | 100     | 100      | 100     | 100     |
+| spawn.ts   | 100     | 100      | 100     | 100     |
+| utils.ts   | 100     | 100      | 100     | 100     |
 
 ## Contributing
 
