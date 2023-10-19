@@ -4,7 +4,5 @@
     "outDir": "dist",
     "sourceMap": false
   },
-  "exclude": [
-    "test",
-  ],
+  "exclude": ["test"]
 }
