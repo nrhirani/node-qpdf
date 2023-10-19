@@ -5,30 +5,29 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [14.x, 16.x, 18.x]
+        node-version: [16.x, 18.x]
 
     steps:
-    - name: Install QPDF
-      run: |
-        sudo apt-get install wget unzip -y
-        wget -O /tmp/qpdf.zip https://github.com/qpdf/qpdf/releases/download/v11.2.0/qpdf-11.2.0-bin-linux-x86_64.zip
-        sudo unzip -d / /tmp/qpdf.zip
-    - uses: actions/checkout@v3
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+      - name: Install QPDF
+        run: |
+          sudo apt-get install wget unzip -y
+          wget -O /tmp/qpdf.zip https://github.com/qpdf/qpdf/releases/download/v11.6.3/qpdf-11.6.3-bin-linux-x86_64.zip
+          sudo unzip -d / /tmp/qpdf.zip
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      - run: npm ci
+      - run: npm run build --if-present
+      - run: npm test
