@@ -7,7 +7,7 @@ import { existsSync } from "node:fs";
  * @returns the value with in kebab case
  */
 export const hyphenate = (variable: string): string =>
-  variable.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
+  variable.replaceAll(/([a-z])([A-Z])/g, "$1-$2").toLowerCase();
 
 /**
  * Determines if the file exists
