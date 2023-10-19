@@ -1,5 +1,7 @@
-import test from "ava";
 import { copyFile } from "node:fs/promises";
+
+import test from "ava";
+
 import { encrypt } from "../src/encrypt.js";
 
 const input = "test/example.pdf";
@@ -15,7 +17,7 @@ test.serial(
         password: { owner: "admin", user: password },
       });
     });
-  }
+  },
 );
 
 test.serial("should not overwrite existing files", async (t) => {
@@ -24,7 +26,7 @@ test.serial("should not overwrite existing files", async (t) => {
       input,
       output: "test/output/encrypted-with-different-passwords.pdf",
       overwrite: false,
-    })
+    }),
   );
   t.is(error?.message, "Output file already exists");
 });
@@ -87,7 +89,7 @@ test("should throw an error if the file doesn't exist", async (t) => {
     encrypt({
       input: "bad_file_name.pdf",
       password,
-    })
+    }),
   );
   t.is(error?.message, "Input file doesn't exist");
 });
@@ -98,7 +100,7 @@ test("should throw if only user or owner password is submitted", async (t) => {
       input,
       // @ts-expect-error This is what I'm testing
       password: { user: "test" },
-    })
+    }),
   );
   t.is(error?.message, "Please specify both owner and user passwords");
 });
@@ -109,7 +111,7 @@ test("should throw if restrictions are wrong", async (t) => {
       input,
       // @ts-expect-error This is what I'm testing
       restrictions: "test",
-    })
+    }),
   );
   t.is(error?.message, "Invalid Restrictions");
 });

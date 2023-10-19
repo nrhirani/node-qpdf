@@ -1,5 +1,5 @@
-import { fileExists } from "./utils.js";
 import execute from "./spawn.js";
+import { fileExists } from "./utils.js";
 
 export interface InfoSettings {
   /** The path for the encrypted pdf */

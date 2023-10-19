@@ -1,4 +1,5 @@
 import test from "ava";
+
 import { decrypt } from "../src/decrypt.js";
 
 test("Should not work if no input file is specified", async (t) => {

@@ -1,4 +1,5 @@
 import test from "ava";
+
 import { info } from "../src/info.js";
 
 test("Should not work if no input file is specified", async (t) => {
