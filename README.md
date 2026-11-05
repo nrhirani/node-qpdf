@@ -211,7 +211,11 @@ Maintained by [Nishit Hirani](http://www.twitter.com/nrhirani)
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/nrhirani/node-qpdf.
+Bug reports and pull requests are welcome on GitHub at https://github.com/nrhirani/node-qpdf. See the [Contributing guide](CONTRIBUTING.md) for how to set up, test and submit changes.
+
+Please report security vulnerabilities privately, as described in the [Security Policy](SECURITY.md).
+
+Everyone participating in this project is expected to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 
 ## License

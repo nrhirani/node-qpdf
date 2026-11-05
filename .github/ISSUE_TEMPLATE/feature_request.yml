@@ -1,0 +1,41 @@
+name: Feature request
+description: Suggest a new feature or an improvement
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem would this solve?
+      description: Describe what you are trying to do and why the current features are not enough.
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: How would you like it to work? A code sample of the API you have in mind helps.
+      render: js
+    validations:
+      required: true
+
+  - type: textarea
+    id: qpdf
+    attributes:
+      label: Related qpdf option
+      description: If this exposes a qpdf feature, which qpdf option or command does it use? See the [qpdf manual](https://qpdf.readthedocs.io/).
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Any workarounds or other approaches you have tried.
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: I searched existing issues and this has not been requested yet.
+          required: true
+        - label: I would be willing to open a pull request for this.

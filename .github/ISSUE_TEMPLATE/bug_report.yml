@@ -1,0 +1,88 @@
+name: Bug report
+description: Something in node-qpdf does not work as documented
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a bug! **Security vulnerabilities must not be reported here**; see the [Security Policy](https://github.com/nrhirani/node-qpdf/security/policy).
+
+        If the same problem happens when you run qpdf directly on the command line, please report it to [qpdf](https://github.com/qpdf/qpdf/issues) instead.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: A clear description of the bug.
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Code to reproduce
+      description: A minimal code sample that shows the problem. Replace real passwords and file names.
+      render: js
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+      description: What did you expect to happen?
+    validations:
+      required: true
+
+  - type: textarea
+    id: error
+    attributes:
+      label: Error output
+      description: The full error, including `err.message`, `err.code` and `err.stderr` if available.
+      render: text
+
+  - type: input
+    id: node-qpdf-version
+    attributes:
+      label: node-qpdf version
+      placeholder: "2.0.0"
+    validations:
+      required: true
+
+  - type: input
+    id: qpdf-version
+    attributes:
+      label: qpdf version
+      description: Output of `qpdf --version` (first line).
+      placeholder: "qpdf version 12.4.2"
+    validations:
+      required: true
+
+  - type: input
+    id: node-version
+    attributes:
+      label: Node.js version
+      description: Output of `node -v`.
+      placeholder: "v24.22.2"
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: "Ubuntu 22.04 / macOS 15 / Windows 11"
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: checks
+    attributes:
+      label: Checklist
+      options:
+        - label: This is not a security vulnerability.
+          required: true
+        - label: I searched existing issues and this has not been reported yet.
+          required: true
+        - label: I am using qpdf 7.0 or newer, and qpdf is installed and on my PATH (or set with `qpdf.command`).
+          required: true
