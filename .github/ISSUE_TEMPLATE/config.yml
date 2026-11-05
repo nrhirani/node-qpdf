@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a security vulnerability
+    url: https://github.com/nrhirani/node-qpdf/security/policy
+    about: Please report security issues privately, not as public issues.
+  - name: qpdf bugs
+    url: https://github.com/qpdf/qpdf/issues
+    about: If the problem also happens when running qpdf directly, report it to the qpdf project.

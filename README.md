@@ -1,5 +1,5 @@
 # node-qpdf
-[![npm version](https://badge.fury.io/js/node-qpdf.svg)](https://badge.fury.io/js/node-qpdf) [![NPM Downloads](https://img.shields.io/npm/dt/node-qpdf.svg)](https://www.npmjs.com/package/node-qpdf) [![NPM Downloads](https://img.shields.io/npm/dm/node-qpdf.svg)](https://www.npmjs.com/package/node-qpdf)
+[![npm version](https://badge.fury.io/js/node-qpdf.svg)](https://badge.fury.io/js/node-qpdf) [![NPM Downloads](https://img.shields.io/npm/dt/node-qpdf.svg)](https://www.npmjs.com/package/node-qpdf) [![NPM Downloads](https://img.shields.io/npm/dm/node-qpdf.svg)](https://www.npmjs.com/package/node-qpdf) [![License: MIT](https://img.shields.io/npm/l/node-qpdf)](LICENSE) [![Dependencies: 0](https://img.shields.io/badge/dependencies-0-brightgreen)](package.json) [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-2.1-4baaaa.svg)](CODE_OF_CONDUCT.md)
 
 A small Node.js wrapper around [qpdf](https://github.com/qpdf/qpdf) for encrypting and decrypting PDF files with AES-256 (default), AES-128 and, if you explicitly allow it, the legacy RC4 algorithms.
 
@@ -211,7 +211,11 @@ Maintained by [Nishit Hirani](http://www.twitter.com/nrhirani)
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/nrhirani/node-qpdf.
+Bug reports and pull requests are welcome on GitHub at https://github.com/nrhirani/node-qpdf. See the [Contributing guide](CONTRIBUTING.md) for how to set up, test and submit changes.
+
+Please report security vulnerabilities privately, as described in the [Security Policy](SECURITY.md).
+
+Everyone participating in this project is expected to follow the [Code of Conduct](CODE_OF_CONDUCT.md).
 
 
 ## License
