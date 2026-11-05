@@ -7,6 +7,7 @@ A small Node.js wrapper around [qpdf](https://github.com/qpdf/qpdf) for encrypti
 
 ## Requirements
 * [Node.js](https://nodejs.org/) 8 or newer (running the test suite needs Node.js 18 or newer)
+  * The stream examples below use `stream.pipeline()`, which needs Node.js 10 or newer. On Node.js 8, use `.pipe()` and listen for `'error'` on the stream returned by node-qpdf.
 * [qpdf](https://github.com/qpdf/qpdf) **7.0 or newer**. node-qpdf passes passwords to qpdf through standard input, which older versions do not support.
   * `allowWeakCrypto` (see [Weak encryption](#weak-encryption)) needs qpdf 10.4 or newer.
 
@@ -26,6 +27,8 @@ qpdf.command = '/opt/qpdf/bin/qpdf';
 ```
 
 ## Quick start
+The examples use `await`, so run them inside an `async` function (or an ES module).
+
 ```js
 const qpdf = require('node-qpdf');
 

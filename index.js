@@ -253,7 +253,13 @@ function executeCommand(args, onWarning, callback) {
   // (Forwarded by hand rather than with pipe(), because pipe() adds its own
   // 'error' listener to the destination, which would hide whether the caller
   // is actually listening for errors.)
-  var outputStream = new stream.PassThrough();
+  // (The custom destroy stops Node.js 8, whose default destroy ends the
+  // stream, from emitting 'end' before 'error'.)
+  var outputStream = new stream.PassThrough({
+    destroy: function(err, cb) {
+      cb(err);
+    }
+  });
   child.stdout.on('data', function(chunk) {
     if (!outputStream.write(chunk)) {
       child.stdout.pause();
